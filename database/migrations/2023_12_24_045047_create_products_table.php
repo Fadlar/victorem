@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('slug', 50)->unique();
             $table->string('name');
-            $table->integer('stock')->nullable();
             $table->integer('weight')->nullable();
-            $table->decimal('customer_price', 12, 2)->nullable();
-            $table->decimal('agent_price', 12, 2)->nullable();
+            $table->decimal('price', 12, 2)->nullable();
+            $table->decimal('discount', 12, 2)->nullable();
+            $table->decimal('discount_percent', 5, 2)->nullable();
             $table->text('description')->nullable();
             $table->string('status')->default(\App\Enums\ProductStatus::DRAFT);
             $table->timestamps();

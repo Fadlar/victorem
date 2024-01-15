@@ -1,11 +1,16 @@
 import { User } from "@/types";
 import { Category } from "../Categories/Category";
-import { Discount } from "../Discounts/Discount";
 
 export interface ProductImages {
     id: number;
     url: string;
     position: number;
+}
+
+export interface Size {
+    id: number;
+    name: string;
+    stock: number;
 }
 
 export interface Product {
@@ -14,13 +19,13 @@ export interface Product {
     slug: string;
     name: string;
     description: string;
-    stock: number;
     weight: number;
-    customer_price: number;
-    agent_price: number;
+    price: number;
+    discount: number;
+    discount_percent: number;
     user: User;
     images: ProductImages[];
     categories: Category[];
-    discount: Discount;
+    sizes: Size[];
     status: string;
 }

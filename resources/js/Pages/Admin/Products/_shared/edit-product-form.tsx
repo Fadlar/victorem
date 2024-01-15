@@ -19,6 +19,7 @@ interface IndexProps {
     handleSelect: (value: Category) => void;
     handleDescription: (value: string) => void;
     handleImages: (files: File[]) => void;
+    handleSize: (e: any, value: any) => void;
     isClearFiles: boolean;
     selectedCategory: Category[];
     buttonTitle?: string;
@@ -36,6 +37,7 @@ export default function EditProductForm({
     handleSelect,
     handleDescription,
     handleImages,
+    handleSize,
     isClearFiles,
     selectedCategory,
     buttonTitle = "Update Product",
@@ -75,6 +77,7 @@ export default function EditProductForm({
                             data={data}
                             errors={errors}
                             handleChange={handleChange}
+                            handleSize={handleSize}
                             className="mb-10"
                         />
                     </div>

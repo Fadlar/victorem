@@ -26,6 +26,18 @@ const pageHeader = {
     ],
 };
 
+interface DataType {
+    name: string;
+    description: string;
+    categories: Category[];
+    price: number;
+    discount: number;
+    discount_percent: number;
+    weight: number;
+    images: File[];
+    sizes: any;
+}
+
 export default function CreateProduct({
     product,
     categories,
@@ -36,21 +48,49 @@ export default function CreateProduct({
     const [selectedCategory, setSelectedCategory] = useState<Category[]>([]);
 
     const { data, setData, errors, reset, processing, post, clearErrors } =
-        useForm({
+        useForm<DataType>({
             name: "",
             description: "",
-            categories: [] as Category[],
-            customer_price: "",
-            agent_price: "",
-            stock: "",
-            weight: "",
-            images: [] as File[],
+            categories: [],
+            price: 0,
+            discount: 0,
+            discount_percent: 0,
+            weight: 0,
+            images: [],
+            sizes: [],
         });
 
     const [isClearFiles, setIsClearFiles] = useState(false);
 
-    const handleChange = (e: { target: { name: string; value: string } }) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+    const handleChange = (e: { target: { name: string; value: any } }) => {
+        const { name, value } = e.target;
+
+        if (name === "discount") {
+            const originalPrice = parseFloat(
+                data.price.toString().replace(/\,/g, ""),
+            );
+            const percentage =
+                (value.toString().replace(/\,/g, "") / originalPrice) * 100;
+
+            setData({
+                ...data,
+                discount: value,
+                discount_percent: percentage,
+            });
+        } else if (name === "discount_percent") {
+            const originalPrice = parseFloat(
+                data.price.toString().replace(/\,/g, ""),
+            );
+            const discount = originalPrice * (value / 100);
+
+            setData({
+                ...data,
+                discount: discount,
+                discount_percent: value,
+            });
+        } else {
+            setData({ ...data, [name]: value });
+        }
     };
 
     const handleSelect = (value: Category) => {
@@ -76,6 +116,29 @@ export default function CreateProduct({
         setData({ ...data, images: files });
     };
 
+    const handleSize = (e: any, sizeName: any) => {
+        const { name, value } = e.target;
+        setData((prevSelectedSizes) => {
+            const updatedSizes = [...prevSelectedSizes.sizes];
+            const index = updatedSizes.findIndex((s) => s.name === sizeName);
+
+            if (index !== -1) {
+                // Update jika ukuran sudah ada
+                updatedSizes[index][name] = value;
+            } else {
+                // Tambahkan baru jika ukuran belum ada
+                updatedSizes.push({ name: sizeName, stock: value });
+            }
+
+            // Filter elemen yang memiliki stock null
+            const filteredSizes = updatedSizes.filter(
+                (s) => s.stock !== null && s.stock !== "",
+            );
+
+            return { ...prevSelectedSizes, sizes: filteredSizes };
+        });
+    };
+
     const handleRemoveCategory = (categoryIdToRemove: number | string) => {
         setSelectedCategory((prevSelected) => {
             const updatedCategory = prevSelected.filter(
@@ -99,6 +162,7 @@ export default function CreateProduct({
                     only: ["products"],
                 });
             },
+            onError: () => notification("Something went wrong", "error"),
         });
     };
 
@@ -129,6 +193,7 @@ export default function CreateProduct({
                 handleChange={handleChange}
                 handleSelect={handleSelect}
                 handleDescription={handleDescription}
+                handleSize={handleSize}
                 isClearFiles={isClearFiles}
                 product={product}
                 categories={categories}

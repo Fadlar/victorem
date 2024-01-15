@@ -1,8 +1,5 @@
-import { CustomTooltip } from "@/components/charts/custom-tooltip";
 import PencilIcon from "@/components/icons/pencil";
-import TicketIcon from "@/components/icons/ticket";
 import { ActionIcon } from "@/components/ui/action-icon";
-import AvatarCard from "@/components/ui/avatar-card";
 import { HeaderCell } from "@/components/ui/table";
 import { Text, Title } from "@/components/ui/text";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -12,10 +9,10 @@ import { Asset } from "@/shared/roles-permissions/utils";
 import { t } from "@/utils/lang";
 import notification from "@/utils/notification";
 import { Link, router } from "@inertiajs/react";
-import { useState } from "react";
-import { BsTicket } from "react-icons/bs";
+import { PiMinus } from "react-icons/pi";
 import { NumericFormat } from "react-number-format";
 import { Avatar, Switch } from "rizzui";
+import { Product } from "../Product";
 
 type Columns = {
     sortConfig?: any;
@@ -39,7 +36,7 @@ export const productColumn = ({
         key: "icon",
         width: 150,
         render: (icon: any, row: any) => (
-            <div className="flex gap-x-2">
+            <div className="flex gap-x-2 items-center">
                 <Avatar
                     src={Asset(row.images[0].url)}
                     name={row.name}
@@ -52,18 +49,6 @@ export const productColumn = ({
                     >
                         {row.name}
                     </Title>
-                    {row.discount !== null ? (
-                        <Tooltip
-                            size="sm"
-                            content={() => "Have a discount"}
-                            placement="top"
-                            color="invert"
-                        >
-                            <div className="cursor-pointer inline">
-                                <TicketIcon className="w-5 h-5 inline" />
-                            </div>
-                        </Tooltip>
-                    ) : null}
                 </div>
             </div>
         ),
@@ -71,24 +56,24 @@ export const productColumn = ({
     {
         title: (
             <HeaderCell
-                title={t("Customer Price")}
+                title={t("Price")}
                 sortable
                 ascending={
                     sortConfig?.direction === "asc" &&
-                    sortConfig?.key === "customer_price"
+                    sortConfig?.key === "price"
                 }
             />
         ),
-        dataIndex: "customer_price",
-        key: "customer_price",
+        dataIndex: "price",
+        key: "price",
         width: 100,
-        onHeaderCell: () => onHeaderCellClick("customer_price"),
-        render: (customer_price: number) => (
+        onHeaderCell: () => onHeaderCellClick("price"),
+        render: (price: number) => (
             <Text className="!text-sm">
                 <NumericFormat
                     prefix="Rp"
                     displayType="text"
-                    value={customer_price}
+                    value={price}
                     thousandSeparator={true}
                     decimalScale={2}
                     fixedDecimalScale={true}
@@ -97,49 +82,66 @@ export const productColumn = ({
         ),
     },
     {
-        title: (
-            <HeaderCell
-                title={t("Agent Price")}
-                sortable
-                ascending={
-                    sortConfig?.direction === "asc" &&
-                    sortConfig?.key === "agent_price"
-                }
-            />
-        ),
-        dataIndex: "agent_price",
-        key: "agent_price",
+        title: <HeaderCell title={t("Discount")} />,
+        dataIndex: "discount",
+        key: "discount",
         width: 100,
-        onHeaderCell: () => onHeaderCellClick("agent_price"),
-        render: (agent_price: number) => (
+        onHeaderCell: () => onHeaderCellClick("discount"),
+        render: (discount: number, row: any) => (
             <Text className="!text-sm">
-                <NumericFormat
-                    prefix="Rp"
-                    displayType="text"
-                    value={agent_price}
-                    thousandSeparator={true}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                />
+                {discount !== null ? (
+                    <NumericFormat
+                        prefix="Rp"
+                        displayType="text"
+                        value={row.price}
+                        thousandSeparator={true}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        className="line-through text-rose-500 block"
+                    />
+                ) : null}
+                {discount === null ? <PiMinus /> : null}
+                {discount !== null ? (
+                    <NumericFormat
+                        prefix="Rp"
+                        displayType="text"
+                        value={row.price - discount}
+                        thousandSeparator={true}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        className="block"
+                    />
+                ) : null}
+                {row.discount_percent !== null ? (
+                    <NumericFormat
+                        suffix="%"
+                        displayType="text"
+                        value={row.discount_percent
+                            .toString()
+                            .replace(/\.00$/, "")}
+                        thousandSeparator={true}
+                        className="block"
+                    />
+                ) : null}
             </Text>
         ),
     },
     {
-        title: (
-            <HeaderCell
-                title={t("Stock")}
-                sortable
-                ascending={
-                    sortConfig?.direction === "asc" &&
-                    sortConfig?.key === "stock"
-                }
-            />
-        ),
+        title: <HeaderCell title={t("Stock")} />,
         onHeaderCell: () => onHeaderCellClick("stock"),
-        dataIndex: "stock",
+        dataIndex: "Stock",
         key: "stock",
         width: 5,
-        render: (stock: number) => <Text>{stock}</Text>,
+        render: (stock: number, row: Product) => (
+            <div>
+                {row.sizes.map((size) => (
+                    <div key={size.id} className="flex items-center gap-x-2">
+                        <span className="uppercase block">{size.name} :</span>
+                        <span className="block font-medium">{size.stock}</span>
+                    </div>
+                ))}
+            </div>
+        ),
     },
     {
         title: <Text>Active</Text>,

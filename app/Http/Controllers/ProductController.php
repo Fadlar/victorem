@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         return inertia('Admin/Products/Index', [
-            'products' => Product::with(['user', 'images', 'categories', 'discount'])->latest()->get()
+            'products' => Product::with(['user', 'images', 'categories', 'sizes'])->latest()->get()
         ]);
     }
 
@@ -30,31 +30,46 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-            'customer_price' => str_replace(',', '', $request->customer_price),
-            'agent_price' => str_replace(',', '', $request->agent_price),
+            'price' => str_replace(',', '', $request->price),
+            'discount' => str_replace(',', '', $request->discount),
+        ]);
+
+        $request->merge([
+            'discount' => in_array($request->discount, [0, "", "0"]) ? null : $request->discount,
+            'discount_percent' => in_array($request->discount_percent, [0, "", "0"]) ? null : $request->discount_percent,
         ]);
 
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'categories' => ['required'],
             'description' => ['required'],
-            'customer_price' => ['required', 'numeric', 'gte:1'],
-            'agent_price' => ['required', 'numeric', 'gte:1'],
-            'stock' => ['required', 'numeric', 'gte:1'],
+            'price' => ['required', 'numeric', 'gte:1'],
+            'discount' => ['nullable'],
+            'discount_percent' => ['nullable', 'numeric', 'lte:100'],
             'weight' => ['required', 'numeric', 'gte:1'],
             'images' => ['required', 'array'],
-            'images.*' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:5048']
+            'images.*' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:5048'],
+            'sizes' => ['required', 'array'],
+            'sizes.*.name' => ['required', 'string'],
+            'sizes.*.stock' => ['required', 'numeric', 'min:0']
         ]);
 
         $product = $request->user()->products()->create([
             'slug' => str()->slug($request->name) . '-' . str()->random(3),
             'name' => $request->name,
             'description' => $request->description,
-            'customer_price' => $request->customer_price,
-            'agent_price' => $request->agent_price,
-            'stock' => $request->stock,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'discount_percent' => $request->discount_percent,
             'weight' => $request->weight
         ]);
+
+        foreach ($request->sizes as $size) {
+            $product->sizes()->create([
+                'name' => $size['name'],
+                'stock' => $size['stock'],
+            ]);
+        }
 
         if (($request->images)) {
             $lastProductImage = ProductImage::where('product_id', $product->id)->latest('position')->firstOr(fn () => false);
@@ -104,7 +119,7 @@ class ProductController extends Controller
             'description' => ['required'],
             'customer_price' => ['required', 'numeric', 'gte:1'],
             'agent_price' => ['required', 'numeric', 'gte:1'],
-            'stock' => ['required', 'numeric', 'gte:1'],
+            'stock' => ['required', 'numeric', 'gte:0'],
             'weight' => ['required', 'numeric', 'gte:1'],
             'images' => ['nullable', 'array'],
             'images.*' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5048']

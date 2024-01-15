@@ -55,11 +55,6 @@ export const menuItems = [
                 permission: "viewTestimonial",
             },
             {
-                name: "Discounts",
-                href: routes.eCommerce.discounts,
-                permission: "viewDiscount",
-            },
-            {
                 name: "Vouchers",
                 href: routes.eCommerce.vouchers,
                 permission: "viewVoucher",

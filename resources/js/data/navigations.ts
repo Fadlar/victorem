@@ -123,7 +123,9 @@ export const navigations = {
         },
     ],
     pages: [
-        { name: "Company", href: "#" },
-        { name: "Stores", href: "#" },
+        { name: "Home", href: "/" },
+        { name: "Shop", href: "#" },
+        { name: "Gallery", href: "#" },
+        { name: "About", href: "#" },
     ],
 };

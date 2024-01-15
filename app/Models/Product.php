@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slug', 'name', 'stock', 'weight', 'customer_price', 'agent_price', 'description', 'status'];
+    protected $fillable = ['slug', 'name', 'weight', 'price', 'discount', 'discount_percent', 'description', 'status'];
 
     public function user()
     {
@@ -34,5 +34,10 @@ class Product extends Model
     public function vouchers()
     {
         return $this->belongsToMany(Voucher::class, 'vouchers_products');
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(Size::class);
     }
 }

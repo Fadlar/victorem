@@ -10,8 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return inertia('Home/Home', [
-            'products' => Product::where('status', ProductStatus::PUBLISH)->with(['images', 'categories'])->latest()->limit(4)->get()
+        return view('home', [
+            'products' => Product::where('status', ProductStatus::PUBLISH)->with(['images', 'categories', 'sizes'])->latest()->limit(8)->get()
         ]);
     }
 }
