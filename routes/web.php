@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Web\ProductWebController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,14 +17,6 @@ Route::middleware('locale')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('{product:slug}', [ProductWebController::class, 'show']);
     });
-    // Route::get('/', function () {
-    //     return Inertia::render('Welcome', [
-    //         'canLogin' => Route::has('login'),
-    //         'canRegister' => Route::has('register'),
-    //         'laravelVersion' => Application::VERSION,
-    //         'phpVersion' => PHP_VERSION,
-    //     ]);
-    // });
 
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
@@ -38,6 +30,8 @@ Route::middleware('locale')->group(function () {
             Route::put('', 'edit');
             Route::delete('', 'destroy');
         });
+
+        Route::post('/cart', [CartController::class, 'store']);
 
         Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
             // Categories

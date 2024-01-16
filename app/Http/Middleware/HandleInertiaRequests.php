@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -29,6 +31,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $carts_global_count = $request->user() ? Cache::rememberForever('carts_global_count', fn () => Cart::where('user_id', $request->user()->id)->count()) : null;
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -37,7 +41,8 @@ class HandleInertiaRequests extends Middleware
             'language' => fn () => [
                 'list' => translations(base_path('lang/' . app()->getLocale() . '.json')),
                 'current' => app()->getLocale()
-            ]
+            ],
+            'carts_global_count' => $carts_global_count
         ];
     }
 }

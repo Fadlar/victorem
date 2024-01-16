@@ -251,23 +251,23 @@ export const pageLinks = [
         href: routes.auth.signUp5,
     },
     {
-        name: "Modern Sign In",
+        name: "Modern Login",
         href: routes.auth.signIn1,
     },
     {
-        name: "Vintage Sign In",
+        name: "Vintage Login",
         href: routes.auth.signIn2,
     },
     {
-        name: "Trendy Sign In",
+        name: "Trendy Login",
         href: routes.auth.signIn3,
     },
     {
-        name: "Elegant Sign In",
+        name: "Elegant Login",
         href: routes.auth.signIn4,
     },
     {
-        name: "Classic Sign In",
+        name: "Classic Login",
         href: routes.auth.signIn5,
     },
     {

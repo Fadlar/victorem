@@ -11,7 +11,7 @@ class ProductWebController extends Controller
     public function show(Product $product)
     {
         return inertia('Products/Show', [
-            'product' => $product->load(['images', 'categories'])
+            'product' => $product->load(['images', 'categories', 'sizes'])
         ]);
     }
 }

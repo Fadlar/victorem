@@ -120,7 +120,7 @@ export const routes = {
         signUp3: "/auth/sign-up-3",
         signUp4: "/auth/sign-up-4",
         signUp5: "/auth/sign-up-5",
-        // sign in
+        // Login
         signIn1: "/auth/sign-in-1",
         signIn2: "/auth/sign-in-2",
         signIn3: "/auth/sign-in-3",

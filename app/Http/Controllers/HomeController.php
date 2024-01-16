@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home', [
+        return inertia('Home/Home', [
             'products' => Product::where('status', ProductStatus::PUBLISH)->with(['images', 'categories', 'sizes'])->latest()->limit(8)->get()
         ]);
     }

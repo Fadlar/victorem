@@ -32,7 +32,7 @@ export default function AuthWrapperOne({
             <Text>
                 This is only demo purpose, click on the{" "}
                 <Text as="b" className="font-semibold text-gray-900">
-                    Sign In
+                    Login
                 </Text>{" "}
                 button to login.
             </Text>,

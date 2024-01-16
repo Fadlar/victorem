@@ -218,7 +218,7 @@ export default function Navbar() {
                                             href="#"
                                             className="-m-2 block p-2 font-medium text-gray-900"
                                         >
-                                            Sign in
+                                            Login
                                         </a>
                                     </div>
                                     <div className="flow-root">

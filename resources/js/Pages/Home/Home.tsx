@@ -1,54 +1,154 @@
 import Customer from "@/Layouts/Customer";
-import ProductsList from "./_components/ProductsList";
 import { Product } from "../Admin/Products/Product";
-import Carousel from "@/Components/Customer/Slider";
+import { Asset } from "@/shared/roles-permissions/utils";
+import { NumericFormat } from "react-number-format";
 
 export default function Home({ products }: { products: Product[] }) {
     return (
-        <Customer>
-            <section className="bg-white">
-                <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-                    <div className="mr-auto place-self-center lg:col-span-7">
-                        <h1 className="max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-800">
-                            Elegance Redefined: Discover Timeless Style at
-                            Victorem
-                        </h1>
-                        <p className="max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl text-gray-600">
-                            Discover unique style with our high-quality T-shirt
-                            collection at Victorem. A blend of fashion and
-                            comfort.
-                        </p>
-                        <a
-                            href="#"
-                            className="border border-gray-700 inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-normal text-center text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300"
-                        >
-                            Explore now
-                            <svg
-                                className="w-5 h-5 ml-2 -mr-1"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
-                        </a>
+        <Customer title="Home">
+            {/* Hero Section Begin */}
+            <section className="hero">
+                <div className="hero__slider owl-carousel">
+                    <div
+                        className="hero__items set-bg"
+                        data-setbg="/assets/img/hero/hero-1.jpg"
+                    >
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xl-5 col-lg-7 col-md-8">
+                                    <div className="hero__text">
+                                        <h6>Summer Collection</h6>
+                                        <h2>Fall - Winter Collections 2030</h2>
+                                        <p>
+                                            A specialist label creating luxury
+                                            essentials. Ethically crafted with
+                                            an unwavering commitment to
+                                            exceptional quality.
+                                        </p>
+                                        <a href="#" className="primary-btn">
+                                            Shop now{" "}
+                                            <span className="arrow_right" />
+                                        </a>
+                                        <div className="hero__social">
+                                            <a href="#">
+                                                <i className="fa fa-facebook" />
+                                            </a>
+                                            <a href="#">
+                                                <i className="fa fa-twitter" />
+                                            </a>
+                                            <a href="#">
+                                                <i className="fa fa-pinterest" />
+                                            </a>
+                                            <a href="#">
+                                                <i className="fa fa-instagram" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="hidden lg:mt-0 lg:col-span-5 lg:flex overflow-hidden">
-                        <img
-                            src="/victorem/banner-black.jpg"
-                            className="rounded-lg"
-                            alt="mockup"
-                        />
+                    <div
+                        className="hero__items set-bg"
+                        data-setbg="/assets/img/hero/hero-2.jpg"
+                    >
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xl-5 col-lg-7 col-md-8">
+                                    <div className="hero__text">
+                                        <h6>Summer Collection</h6>
+                                        <h2>Fall - Winter Collections 2030</h2>
+                                        <p>
+                                            A specialist label creating luxury
+                                            essentials. Ethically crafted with
+                                            an unwavering commitment to
+                                            exceptional quality.
+                                        </p>
+                                        <a href="#" className="primary-btn">
+                                            Shop now{" "}
+                                            <span className="arrow_right" />
+                                        </a>
+                                        <div className="hero__social">
+                                            <a href="#">
+                                                <i className="fa fa-facebook" />
+                                            </a>
+                                            <a href="#">
+                                                <i className="fa fa-twitter" />
+                                            </a>
+                                            <a href="#">
+                                                <i className="fa fa-pinterest" />
+                                            </a>
+                                            <a href="#">
+                                                <i className="fa fa-instagram" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-
-            <ProductsList products={products} />
-            <Carousel />
+            {/* Hero Section End */}
+            {/* Product Section Begin */}
+            <section className="product spad mt-5">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <ul className="filter__controls">
+                                <li className="active" data-filter="*">
+                                    Latest Products
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="row product__filter">
+                        {products.length > 0 ? (
+                            products.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix"
+                                >
+                                    <div className="product__item">
+                                        <div
+                                            className="product__item__pic set-bg"
+                                            style={{
+                                                backgroundImage: `url(${Asset(
+                                                    product.images[0].url,
+                                                )})`,
+                                            }}
+                                        >
+                                            <span className="label">
+                                                50% OFF
+                                            </span>
+                                        </div>
+                                        <div className="product__item__text">
+                                            <h6>{product.name}</h6>
+                                            <a
+                                                href={`/products/${product.slug}`}
+                                                className="add-cart"
+                                            >
+                                                View Details
+                                            </a>
+                                            <h5>
+                                                {product.discount !== null ||
+                                                product.discount !== 0 ? (
+                                                    <NumericFormat />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div>Product not found.</div>
+                        )}
+                    </div>
+                </div>
+            </section>
+            {/* Product Section End */}
         </Customer>
     );
 }

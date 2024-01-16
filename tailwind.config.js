@@ -1,6 +1,5 @@
-import defaultTheme from "tailwindcss/defaultTheme";
-import forms from "@tailwindcss/forms";
 import containerQueries from "@tailwindcss/container-queries";
+import forms from "@tailwindcss/forms";
 import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */

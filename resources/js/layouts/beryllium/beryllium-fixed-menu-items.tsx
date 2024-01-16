@@ -1,77 +1,77 @@
-import { routes } from '@/config/routes';
-import { DUMMY_ID } from '@/config/constants';
-import { IconType } from 'react-icons/lib';
+import { routes } from "@/config/routes";
+import { DUMMY_ID } from "@/config/constants";
+import { IconType } from "react-icons/lib";
 import {
-  PiAirplaneTilt,
-  PiBellSimpleRinging,
-  PiBinoculars,
-  PiBriefcase,
-  PiBrowser,
-  PiCalendarPlus,
-  PiCards,
-  PiCaretCircleUpDown,
-  PiChartBar,
-  PiChartLineUp,
-  PiChatCenteredDots,
-  PiCreditCard,
-  PiCurrencyDollar,
-  PiEnvelopeSimpleOpen,
-  PiFeather,
-  PiFileImage,
-  PiFolderLock,
-  PiFolderNotch,
-  PiGridFour,
-  PiHammer,
-  PiHeadset,
-  PiHourglassSimple,
-  PiHouse,
-  PiHouseLine,
-  PiLightning,
-  PiListNumbers,
-  PiLockKey,
-  PiMagicWand,
-  PiMapPinLine,
-  PiNoteBlank,
-  PiNotePencil,
-  PiPackage,
-  PiPokerChip,
-  PiRocketLaunch,
-  PiShieldCheck,
-  PiShieldCheckered,
-  PiShootingStar,
-  PiShoppingCart,
-  PiSquaresFour,
-  PiSteps,
-  PiTable,
-  PiUser,
-  PiUserCircle,
-  PiUserGear,
-  PiUserPlus,
-} from 'react-icons/pi';
-import { atom } from 'jotai';
+    PiAirplaneTilt,
+    PiBellSimpleRinging,
+    PiBinoculars,
+    PiBriefcase,
+    PiBrowser,
+    PiCalendarPlus,
+    PiCards,
+    PiCaretCircleUpDown,
+    PiChartBar,
+    PiChartLineUp,
+    PiChatCenteredDots,
+    PiCreditCard,
+    PiCurrencyDollar,
+    PiEnvelopeSimpleOpen,
+    PiFeather,
+    PiFileImage,
+    PiFolderLock,
+    PiFolderNotch,
+    PiGridFour,
+    PiHammer,
+    PiHeadset,
+    PiHourglassSimple,
+    PiHouse,
+    PiHouseLine,
+    PiLightning,
+    PiListNumbers,
+    PiLockKey,
+    PiMagicWand,
+    PiMapPinLine,
+    PiNoteBlank,
+    PiNotePencil,
+    PiPackage,
+    PiPokerChip,
+    PiRocketLaunch,
+    PiShieldCheck,
+    PiShieldCheckered,
+    PiShootingStar,
+    PiShoppingCart,
+    PiSquaresFour,
+    PiSteps,
+    PiTable,
+    PiUser,
+    PiUserCircle,
+    PiUserGear,
+    PiUserPlus,
+} from "react-icons/pi";
+import { atom } from "jotai";
 
 export interface SubMenuItemType {
-  name: string;
-  description?: string;
-  href: string;
-  badge?: string;
+    name: string;
+    description?: string;
+    href: string;
+    badge?: string;
 }
 
 export interface ItemType {
-  name: string;
-  icon: IconType;
-  href?: string;
-  description?: string;
-  badge?: string;
-  subMenuItems?: SubMenuItemType[];
+    name: string;
+    icon: IconType;
+    href?: string;
+    description?: string;
+    badge?: string;
+    subMenuItems?: SubMenuItemType[];
 }
 
 export interface MenuItemsType {
-  id: string;
-  name: string;
-  title: string;
-  icon: IconType;
-  menuItems: ItemType[];
+    id: string;
+    name: string;
+    title: string;
+    icon: IconType;
+    menuItems: ItemType[];
 }
 
 export const berylliumMenuItems: MenuItemsType[] = [
@@ -497,28 +497,28 @@ export const berylliumMenuItems: MenuItemsType[] = [
                 ],
             },
             {
-                name: "Sign In",
+                name: "Login",
                 icon: PiShieldCheck,
                 description: '"Effortless Assistance at your Fingertips!"',
                 subMenuItems: [
                     {
-                        name: "Modern Sign In",
+                        name: "Modern Login",
                         href: routes.auth.signIn1,
                     },
                     {
-                        name: "Vintage Sign In",
+                        name: "Vintage Login",
                         href: routes.auth.signIn2,
                     },
                     {
-                        name: "Trendy Sign In",
+                        name: "Trendy Login",
                         href: routes.auth.signIn3,
                     },
                     {
-                        name: "Elegant Sign In",
+                        name: "Elegant Login",
                         href: routes.auth.signIn4,
                     },
                     {
-                        name: "Classic Sign In",
+                        name: "Classic Login",
                         href: routes.auth.signIn5,
                     },
                 ],
