@@ -70,7 +70,7 @@ export const discountColumn = ({
                         decimalScale={2}
                         fixedDecimalScale={true}
                         prefix="Rp"
-                        value={row.product.customer_price}
+                        value={row.product.price}
                         className="text-[0.7rem] animate-pulse font-medium line-through text-gray-400"
                     />
                 </small>
@@ -81,7 +81,7 @@ export const discountColumn = ({
                         decimalScale={2}
                         fixedDecimalScale={true}
                         prefix="Rp"
-                        value={row.product.customer_price - discount_price}
+                        value={row.product.price - discount_price}
                     />
                 </Title>
             </div>

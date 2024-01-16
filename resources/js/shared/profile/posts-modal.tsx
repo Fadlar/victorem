@@ -179,9 +179,9 @@ function ModalCardComment({ commentData }: CommentPropsType) {
             />
             <div>
                 <Title as="h2" className="text-sm font-medium text-gray-1000">
-                    <Link href={"/"} className="inline-block hover:underline">
+                    <a href={"/"} className="inline-block hover:underline">
                         {commentData.user}
-                    </Link>
+                    </a>
                 </Title>
                 <span
                     className="mt-1.5 block text-sm font-normal text-gray-800 [&_a]:text-primary-light"

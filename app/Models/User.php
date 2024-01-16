@@ -63,11 +63,23 @@ class User extends Authenticatable
         return $this->hasMany(Category::class);
     }
 
-    public function discounts(){
+    public function discounts()
+    {
         return $this->hasMany(Discount::class);
     }
 
-    public function vouchers(){
+    public function vouchers()
+    {
         return $this->hasMany(Voucher::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

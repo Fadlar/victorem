@@ -34,7 +34,7 @@ class DiscountController extends Controller
 
         $price = 0;
         if (count($request->product)) {
-            $price = $request->product['customer_price'];
+            $price = $request->product['price'];
         }
 
         // dd($request->all());
@@ -76,7 +76,7 @@ class DiscountController extends Controller
 
         $price = 0;
         if (count($request->product)) {
-            $price = $request->product['customer_price'];
+            $price = $request->product['price'];
         }
 
         // dd($request->all());

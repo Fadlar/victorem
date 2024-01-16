@@ -53,12 +53,12 @@ export default function NewsLetterForm() {
                 )}
             </Form>
             <div className="mt-4 text-center">
-                <Link
+                <a
                     href={"/"}
                     className="text-sm font-medium text-gray-700 underline decoration-gray-700 underline-offset-2 @2xl:mt-4 @2xl:text-base"
                 >
                     No thanks
-                </Link>
+                </a>
             </div>
         </>
     );

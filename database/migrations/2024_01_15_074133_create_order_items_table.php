@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('resi')->nullable();
-            $table->string('weight');
-            $table->decimal('cost', 10, 2);
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained()->nullOnDelete();
+            $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->decimal('discount', 10, 2);
             $table->decimal('amount', 10, 2);
-            $table->text('address')->nullable();
-            $table->string('status')->default(\App\Enums\OrderStatus::PENDING);
+            $table->json('data');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order_items');
     }
 };

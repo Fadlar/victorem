@@ -1,10 +1,9 @@
 import InputError from "@/Components/InputError";
-import SelectBox from "@/components/ui/select";
 import FormGroup from "@/shared/form-group";
 import cn from "@/utils/class-names";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { NumericFormat } from "react-number-format";
-import { Button, Input } from "rizzui";
+import { Input } from "rizzui";
 
 interface PricingInventoryProps {
     className?: string;
@@ -67,7 +66,7 @@ export default function PricingInventory({
                         name="price"
                         placeholder="Rp"
                         onChange={handleChange}
-                        value={data.customer_price}
+                        value={data.price}
                         min={1}
                     />
                     <InputError
@@ -94,7 +93,7 @@ export default function PricingInventory({
                         value={data.discount}
                         min={1}
                         disabled={!data.price ? true : false}
-                        max={data.product && data.product.customer_price}
+                        max={data.product && data.product.price}
                     />
                     <InputError
                         className="mt-1"
@@ -164,10 +163,12 @@ export default function PricingInventory({
                                 onChange={(e) => handleSize(e, size.value)}
                                 placeholder="Product stock"
                             />
-                            <InputError
-                                message={errors[`sizes.${index}.stock`]}
-                                className="col-span-full mt-1"
-                            />
+                            {errors && (
+                                <InputError
+                                    message={errors[`sizes.${index}.stock`]}
+                                    className="col-span-full mt-1"
+                                />
+                            )}
                             {index === 0 ? (
                                 <InputError
                                     message={errors && errors.sizes}

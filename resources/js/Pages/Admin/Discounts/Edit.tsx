@@ -54,7 +54,7 @@ export default function EditDiscount({
         const { name, value } = e.target;
 
         if (name === "discount_price") {
-            const originalPrice = data.product.customer_price;
+            const originalPrice = data.product.price;
             const percentage = (value / originalPrice) * 100;
 
             setData({
@@ -63,7 +63,7 @@ export default function EditDiscount({
                 percentage: percentage,
             });
         } else if (name === "percentage") {
-            const originalPrice = data.product.customer_price;
+            const originalPrice = data.product.price;
             const discount = originalPrice * (value / 100);
 
             setData({

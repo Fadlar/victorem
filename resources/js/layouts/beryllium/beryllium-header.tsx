@@ -24,13 +24,13 @@ export default function Header({ className }: { className?: string }) {
             )}
         >
             <div className="hidden items-center gap-3 xl:flex">
-                <Link
+                <a
                     aria-label="Site Logo"
                     href={"/"}
                     className="me-4 hidden w-[155px] shrink-0 text-gray-900 lg:me-5 xl:block"
                 >
                     <Logo className="max-w-[155px]" />
-                </Link>
+                </a>
             </div>
 
             <div className="flex w-full items-center justify-between gap-5 xl:w-[calc(100%_-_190px)] 2xl:w-[calc(100%_-_310px)] 3xl:gap-6">
@@ -38,13 +38,13 @@ export default function Header({ className }: { className?: string }) {
                     <HamburgerButton
                         view={<Sidebar className="static w-full 2xl:w-full" />}
                     />
-                    <Link
+                    <a
                         aria-label="Site Logo"
                         href="/"
                         className="me-4 w-9 shrink-0 text-gray-900 lg:me-5 xl:hidden"
                     >
                         <Logo iconOnly={true} />
-                    </Link>
+                    </a>
                     <SearchWidget
                         icon={
                             <PiMagnifyingGlass className="me-3 h-[20px] w-[20px]" />

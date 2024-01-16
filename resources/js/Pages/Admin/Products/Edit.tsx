@@ -41,19 +41,47 @@ export default function EditProduct({
         name: product.name ?? "",
         description: product.description ?? "",
         categories: product.categories ?? [],
-        customer_price: product.customer_price ?? "",
-        agent_price: product.agent_price ?? "",
-        stock: product.stock ?? "",
-        weight: product.weight ?? "",
+        price: product.price ?? 0,
+        discount: product.discount ?? 0,
+        discount_percent: product.discount_percent ?? 0,
+        weight: product.weight ?? 0,
+        images: [],
+        sizes: product.sizes ?? [],
     });
 
-    const [images, setImages] = useState<File[]>([]);
     const [isClearFiles, setIsClearFiles] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState<any>(null);
 
-    const handleChange = (e: { target: { name: string; value: string } }) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+    const handleChange = (e: { target: { name: string; value: any } }) => {
+        const { name, value } = e.target;
+
+        if (name === "discount") {
+            const originalPrice = parseFloat(
+                data.price.toString().replace(/\,/g, ""),
+            );
+            const percentage =
+                (value.toString().replace(/\,/g, "") / originalPrice) * 100;
+
+            setData({
+                ...data,
+                discount: value,
+                discount_percent: percentage,
+            });
+        } else if (name === "discount_percent") {
+            const originalPrice = parseFloat(
+                data.price.toString().replace(/\,/g, ""),
+            );
+            const discount = originalPrice * (value / 100);
+
+            setData({
+                ...data,
+                discount: discount,
+                discount_percent: value,
+            });
+        } else {
+            setData({ ...data, [name]: value });
+        }
     };
 
     const handleSelect = (value: Category) => {
@@ -76,15 +104,40 @@ export default function EditProduct({
     };
 
     const handleImages = (files: File[]) => {
-        setImages(files);
+        setData({ ...data, images: files });
+    };
+
+    const handleSize = (e: any, sizeName: any) => {
+        const { name, value } = e.target;
+        setData((prevSelectedSizes: any) => {
+            const updatedSizes = [...prevSelectedSizes.sizes];
+            const index = updatedSizes.findIndex((s) => s.name === sizeName);
+
+            if (index !== -1) {
+                // Update jika ukuran sudah ada
+                updatedSizes[index][name] = value;
+            } else {
+                // Tambahkan baru jika ukuran belum ada
+                updatedSizes.push({ name: sizeName, stock: value });
+            }
+
+            // Filter elemen yang memiliki stock null
+            const filteredSizes = updatedSizes.filter(
+                (s) => s.stock !== null && s.stock !== "",
+            );
+
+            return { ...prevSelectedSizes, sizes: filteredSizes };
+        });
     };
 
     const handleRemoveCategory = (categoryIdToRemove: number | string) => {
-        setSelectedCategory((prevSelected) =>
-            prevSelected.filter(
+        setSelectedCategory((prevSelected) => {
+            const updatedCategory = prevSelected.filter(
                 (category) => category.id !== categoryIdToRemove,
-            ),
-        );
+            );
+            setData({ ...data, categories: updatedCategory });
+            return updatedCategory;
+        });
     };
 
     const submit = (e: { preventDefault: () => void }) => {
@@ -94,13 +147,14 @@ export default function EditProduct({
             {
                 _method: "patch",
                 name: data.name,
-                categories: data.categories,
                 description: data.description,
-                customer_price: data.customer_price,
-                agent_price: data.agent_price,
-                stock: data.stock,
+                categories: data.categories,
+                price: data.price,
+                discount: data.discount,
+                discount_percent: data.discount_percent,
                 weight: data.weight,
-                images: images,
+                images: data.images,
+                sizes: data.sizes,
             },
             {
                 preserveScroll: true,
@@ -108,10 +162,9 @@ export default function EditProduct({
                     notification("Product has been updated.", "success");
                     setData({});
                     setErrors({});
-                    setImages([]);
                     setIsClearFiles(true);
-                    router.visit(routes.eCommerce.editProduct(product.slug), {
-                        only: ["product"],
+                    router.visit(routes.eCommerce.products, {
+                        only: ["products"],
                     });
                 },
                 onStart: () => setIsLoading(true),
@@ -144,6 +197,7 @@ export default function EditProduct({
                 </Link>
             </PageHeader>
             <EditProductForm
+                handleSize={handleSize}
                 handleSubmit={submit}
                 data={data}
                 errors={errors}

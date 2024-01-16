@@ -102,7 +102,7 @@ export default function EditDiscountForm({
                                                                 displayType="text"
                                                                 value={
                                                                     data.product
-                                                                        .customer_price
+                                                                        .price
                                                                 }
                                                                 prefix="Rp"
                                                                 thousandSeparator=","
@@ -194,7 +194,7 @@ export default function EditDiscountForm({
                                                                             <NumericFormat
                                                                                 displayType="text"
                                                                                 value={
-                                                                                    product.customer_price
+                                                                                    product.price
                                                                                 }
                                                                                 prefix="Rp"
                                                                                 thousandSeparator=","
@@ -254,10 +254,7 @@ export default function EditDiscountForm({
                                     value={data.discount_price}
                                     min={1}
                                     disabled={!productFound}
-                                    max={
-                                        data.product &&
-                                        data.product.customer_price
-                                    }
+                                    max={data.product && data.product.price}
                                 />
                                 <InputError
                                     className="mt-1"

@@ -101,7 +101,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         return inertia('Admin/Products/Edit', [
-            'product' => $product->load(['categories', 'images']),
+            'product' => $product->load(['categories', 'images', 'sizes']),
             'categories' => Category::get()
         ]);
     }
@@ -109,20 +109,28 @@ class ProductController extends Controller
     public function update(Product $product, Request $request)
     {
         $request->merge([
-            'customer_price' => str_replace(',', '', $request->customer_price),
-            'agent_price' => str_replace(',', '', $request->agent_price),
+            'price' => str_replace(',', '', $request->price),
+            'discount' => str_replace(',', '', $request->discount),
+        ]);
+
+        $request->merge([
+            'discount' => in_array($request->discount, [0, "", "0"]) ? null : $request->discount,
+            'discount_percent' => in_array($request->discount_percent, [0, "", "0"]) ? null : $request->discount_percent,
         ]);
 
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'categories' => ['required'],
             'description' => ['required'],
-            'customer_price' => ['required', 'numeric', 'gte:1'],
-            'agent_price' => ['required', 'numeric', 'gte:1'],
-            'stock' => ['required', 'numeric', 'gte:0'],
+            'price' => ['required', 'numeric', 'gte:1'],
+            'discount' => ['nullable'],
+            'discount_percent' => ['nullable', 'numeric', 'lte:100'],
             'weight' => ['required', 'numeric', 'gte:1'],
             'images' => ['nullable', 'array'],
-            'images.*' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5048']
+            'images.*' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5048'],
+            'sizes' => ['required', 'array'],
+            'sizes.*.name' => ['required', 'string'],
+            'sizes.*.stock' => ['required', 'numeric', 'min:0']
         ]);
 
         if (($request->images)) {
@@ -149,6 +157,14 @@ class ProductController extends Controller
         }
 
         $product->update($request->all());
+
+        foreach ($request->sizes as $size) {
+            $product->sizes()->updateOrCreate(['product_id' => $product['id'], 'name' => $size['name']], [
+                'name' => $size['name'],
+                'stock' => $size['stock'],
+            ]);
+        }
+
         return back();
     }
 

@@ -53,12 +53,12 @@ export default function NewsLetterForm() {
                 )}
             </Form>
             <div className="mt-4 flex justify-center">
-                <Link
+                <a
                     href={"/"}
                     className="text-center text-base font-medium text-gray-700 underline decoration-gray-700 underline-offset-2"
                 >
                     No thanks
-                </Link>
+                </a>
             </div>
         </>
     );

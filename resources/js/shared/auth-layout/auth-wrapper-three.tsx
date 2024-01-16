@@ -24,7 +24,7 @@ export default function AuthWrapperThree({
     return (
         <>
             <div className="relative flex min-h-screen w-full flex-col justify-center bg-gradient-to-tr from-[#136A8A] to-[#267871] p-4 md:p-12 lg:p-28">
-                <Link
+                <a
                     href={"/"}
                     className="mb:pb-3 start-4 z-10 flex items-center justify-center pb-6 pt-3 text-sm font-medium text-white/80 hover:text-white md:absolute md:top-1/2 md:-translate-y-1/2 md:rounded-full "
                 >
@@ -32,7 +32,7 @@ export default function AuthWrapperThree({
                     <span className="-mt-px ms-1 font-lexend">
                         Back to home
                     </span>
-                </Link>
+                </a>
                 <div
                     className={cn(
                         "mx-auto w-full max-w-md rounded-xl bg-white px-4 py-9 dark:bg-gray-50 sm:px-6 md:max-w-xl md:px-10 md:py-12 lg:max-w-[700px] lg:px-16 xl:rounded-2xl 3xl:rounded-3xl",
@@ -40,7 +40,7 @@ export default function AuthWrapperThree({
                     )}
                 >
                     <div className="flex flex-col items-center">
-                        <Link
+                        <a
                             href={"/"}
                             className="mb-7 inline-block max-w-[64px] lg:mb-9"
                         >
@@ -49,7 +49,7 @@ export default function AuthWrapperThree({
                                 alt="Isomorphic"
                                 className="dark:invert"
                             />
-                        </Link>
+                        </a>
                         <Title
                             as="h2"
                             className="mb-7 text-center text-[26px] leading-snug md:text-3xl md:!leading-normal lg:mb-10 lg:text-4xl lg:leading-normal"

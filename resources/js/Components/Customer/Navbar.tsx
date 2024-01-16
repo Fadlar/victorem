@@ -280,7 +280,7 @@ export default function Navbar() {
 
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0 flex-shrink-0">
-                                <Link href="/">
+                                <a href="/">
                                     <span className="sr-only">
                                         Your Company
                                     </span>
@@ -289,7 +289,7 @@ export default function Navbar() {
                                         src="/victorem/logo-light.png"
                                         alt=""
                                     />
-                                </Link>
+                                </a>
                             </div>
 
                             {/* Flyout menus */}

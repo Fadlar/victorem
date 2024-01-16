@@ -21,13 +21,13 @@ export default function Header({ className }: FooterProps) {
                 className,
             )}
         >
-            <Link href={"/"}>
+            <a href={"/"}>
                 <img
                     // src={siteConfig.logo}
                     // alt={siteConfig.title}
                     className="dark:invert"
                 />
-            </Link>
+            </a>
             <StepCounter
                 currentStep={step + 1}
                 totalSteps={stepTwoTotalSteps}

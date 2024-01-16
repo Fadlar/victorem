@@ -38,6 +38,6 @@ class Product extends Model
 
     public function sizes()
     {
-        return $this->hasMany(Size::class);
+        return $this->hasMany(Size::class)->orderByRaw("FIELD(name, 's','m','l','xl','xxl')");
     }
 }

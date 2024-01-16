@@ -53,13 +53,13 @@ export default function Header() {
                 >
                     <Sidebar />
                 </Drawer>
-                <Link
+                <a
                     href={"/"}
                     aria-label="Site Logo"
                     className="me-4 w-9 shrink-0 lg:me-5 xl:hidden"
                 >
                     <Logo iconOnly={true} />
-                </Link>
+                </a>
                 <SearchWidget />
             </div>
 

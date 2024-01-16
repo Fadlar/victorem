@@ -74,13 +74,13 @@ export default function Header() {
                         <Sidebar className="static w-full xl:p-0 2xl:w-full [&>div]:xl:rounded-none" />
                     }
                 />
-                <Link
+                <a
                     href={"/"}
                     aria-label="Site Logo"
                     className="me-4 w-9 shrink-0 lg:me-5 xl:hidden"
                 >
                     <Logo iconOnly={true} />
-                </Link>
+                </a>
                 <SearchWidget />
             </div>
             <HeaderMenuRight />

@@ -23,9 +23,9 @@ export default function Congratulations() {
                         Congratulations !
                     </h2>
                     <p className="mb-6 text-gray-500">You are done</p>
-                    <Link href={"/"}>
+                    <a href={"/"}>
                         <Button>Back To Home</Button>
-                    </Link>
+                    </a>
                 </div>
             </div>
         </>
