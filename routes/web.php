@@ -5,8 +5,10 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RajaongkirController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Web\ProductWebController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,17 @@ Route::middleware('locale')->group(function () {
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
+        Route::prefix('location')->group(function () {
+            Route::get('province', [RajaongkirController::class, 'province']);
+            Route::get('city/{province_id}', [RajaongkirController::class, 'city']);
+            Route::get('subdistrict/{city_id}', [RajaongkirController::class, 'subdistrict']);
+            Route::get('cost/{subdistrict_id}', [RajaongkirController::class, 'cost']);
+        });
+
+        Route::prefix('order')->group(function () {
+            Route::post('', [OrderController::class, 'store']);
+        });
+
         Route::prefix('language')->controller(LanguageController::class)->group(function () {
             Route::get('', 'index');
             Route::post('create', 'create');
@@ -31,7 +44,17 @@ Route::middleware('locale')->group(function () {
             Route::delete('', 'destroy');
         });
 
-        Route::post('/cart', [CartController::class, 'store']);
+        Route::prefix('cart')->controller(CartController::class)->group(function () {
+            Route::get('', 'index');
+            Route::post('', 'store');
+            Route::put('', 'update');
+            Route::delete('{cart}', 'destroy');
+        });
+
+        Route::prefix('checkout')->group(function () {
+            Route::get('{order}', [OrderController::class, 'show']);
+            Route::post('', [OrderController::class, 'checkout']);
+        });
 
         Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
             // Categories

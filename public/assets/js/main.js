@@ -107,15 +107,14 @@
     /*-------------------
 		Radio Btn
 	--------------------- */
-    $(".product__color__select label, .shop__sidebar__size label").on(
-        "click",
-        function () {
-            $(
-                ".product__color__select label, .shop__sidebar__size label",
-            ).removeClass("active");
-            $(this).addClass("active");
-        },
-    );
+    $(
+        ".product__color__select label, .shop__sidebar__size label, .product__details__option__size label",
+    ).on("click", function () {
+        $(
+            ".product__color__select label, .shop__sidebar__size label, .product__details__option__size label",
+        ).removeClass("active");
+        $(this).addClass("active");
+    });
 
     /*-------------------
 		Scroll
@@ -174,12 +173,12 @@
 		Quantity change
 	--------------------- */
     var proQty = $(".pro-qty");
-    // proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
-    // proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
+    proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
+    proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
     proQty.on("click", ".qtybtn", function () {
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
-        if ($button.hasClass("inc")) {
+        if ($button.hasClass("dec")) {
             var newVal = parseFloat(oldValue) + 1;
         } else {
             // Don't allow decrementing below zero

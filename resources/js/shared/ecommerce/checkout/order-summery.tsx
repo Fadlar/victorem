@@ -17,21 +17,21 @@ export default function OrderSummery({
     isLoading?: boolean;
 }) {
     // const params = useParams();
-    const {
-        items,
-        total,
-        addItemToCart,
-        removeItemFromCart,
-        clearItemFromCart,
-    } = useCart();
-    const { price: subtotal } = usePrice(
-        items && {
-            amount: total,
-        },
-    );
-    const { price: totalPrice } = usePrice({
-        amount: total,
-    });
+    // const {
+    //     items,
+    //     total,
+    //     addItemToCart,
+    //     removeItemFromCart,
+    //     clearItemFromCart,
+    // } = useCart();
+    // const { price: subtotal } = usePrice(
+    //     items && {
+    //         amount: total,
+    //     },
+    // );
+    // const { price: totalPrice } = usePrice({
+    //     amount: total,
+    // });
     return (
         <div
             className={cn(
@@ -56,17 +56,17 @@ export default function OrderSummery({
                     </Link>
                 </div>
                 <div className="pt-4 @xl:pt-6">
-                    <OrderProducts
+                    {/* <OrderProducts
                         addItemToCart={addItemToCart}
                         removeItemFromCart={removeItemFromCart}
                         clearItemFromCart={clearItemFromCart}
                         items={items}
                         className="mb-5 border-b border-gray-200 pb-5"
-                    />
+                    /> */}
                     <div className="mb-4 flex items-center justify-between last:mb-0">
                         Subtotal
                         <Text as="span" className="font-medium text-gray-900">
-                            {subtotal}
+                            123 {/* {subtotal} */}
                         </Text>
                     </div>
                     <div className="mb-4 flex items-center justify-between last:mb-0">
@@ -83,20 +83,11 @@ export default function OrderSummery({
                     </div>
                     <div className="flex items-center justify-between border-t border-gray-200 py-4 text-base font-bold text-gray-1000">
                         Total
-                        <Text>{totalPrice}</Text>
+                        <Text>
+                            12
+                            {/* {totalPrice} */}
+                        </Text>
                     </div>
-                    <Button
-                        type="submit"
-                        isLoading={isLoading}
-                        className="mt-3 w-full text-base @md:h-12 dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
-                    >
-                        {
-                            // params?.id ?
-                            // "Update Order"
-                            // :
-                            "Place Order"
-                        }
-                    </Button>
                 </div>
             </div>
         </div>

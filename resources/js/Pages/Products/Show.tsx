@@ -1,7 +1,7 @@
 import Customer from "@/Layouts/Customer";
 import { Product } from "../Admin/Products/Product";
 import { Asset } from "@/shared/roles-permissions/utils";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -24,8 +24,10 @@ export default function ShowProduct({ product }: { product: Product }) {
         e.preventDefault();
         post("/cart", {
             preserveScroll: true,
-            onSuccess: () =>
-                toast.success("Product successfully added to cart."),
+            onSuccess: () => {
+                toast.success("Product successfully added to cart.");
+                router.visit("/cart", { only: ["carts"] });
+            },
         });
     };
 
@@ -165,6 +167,12 @@ export default function ShowProduct({ product }: { product: Product }) {
                                                     </>
                                                 ) : null}
                                             </div>
+                                            {sizes !== null ? (
+                                                <div className="pt-2">
+                                                    Available stock :{" "}
+                                                    {sizes.stock}
+                                                </div>
+                                            ) : null}
                                             <div className="text-danger">
                                                 {errors.size}
                                             </div>

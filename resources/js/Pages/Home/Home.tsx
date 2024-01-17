@@ -113,9 +113,10 @@ export default function Home({ products }: { products: Product[] }) {
                                         <div
                                             className="product__item__pic set-bg"
                                             style={{
-                                                backgroundImage: `url(${Asset(
-                                                    product.images[0].url,
-                                                )})`,
+                                                backgroundImage:
+                                                    "url('/storage/" +
+                                                    product.images[0].url +
+                                                    "')",
                                             }}
                                         >
                                             <span className="label">
@@ -133,7 +134,7 @@ export default function Home({ products }: { products: Product[] }) {
                                             <h5>
                                                 {product.discount !== null ||
                                                 product.discount !== 0 ? (
-                                                    <NumericFormat />
+                                                    <NumericFormat displayType="text" />
                                                 ) : (
                                                     ""
                                                 )}

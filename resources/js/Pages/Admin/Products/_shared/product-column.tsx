@@ -89,7 +89,7 @@ export const productColumn = ({
         onHeaderCell: () => onHeaderCellClick("discount"),
         render: (discount: number, row: any) => (
             <Text className="!text-sm">
-                {discount !== null ? (
+                {discount !== null || discount > 0 ? (
                     <NumericFormat
                         prefix="Rp"
                         displayType="text"
@@ -101,7 +101,7 @@ export const productColumn = ({
                     />
                 ) : null}
                 {discount === null ? <PiMinus /> : null}
-                {discount !== null ? (
+                {discount !== null || discount > 0 ? (
                     <NumericFormat
                         prefix="Rp"
                         displayType="text"
@@ -112,7 +112,7 @@ export const productColumn = ({
                         className="block"
                     />
                 ) : null}
-                {row.discount_percent !== null ? (
+                {row.discount_percent !== null || row.discount_percent > 0 ? (
                     <NumericFormat
                         suffix="%"
                         displayType="text"

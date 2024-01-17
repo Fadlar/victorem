@@ -10,8 +10,10 @@ class ProductWebController extends Controller
 {
     public function show(Product $product)
     {
-        return inertia('Products/Show', [
-            'product' => $product->load(['images', 'categories', 'sizes'])
+        $stock = $product->load(['images', 'categories', 'sizes']);
+        return view('products.show', [
+            'product' => $product,
+            'out_of_stock' => $stock->sizes->sum('stock')
         ]);
     }
 }

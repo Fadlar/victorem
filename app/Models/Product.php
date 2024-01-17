@@ -40,4 +40,19 @@ class Product extends Model
     {
         return $this->hasMany(Size::class)->orderByRaw("FIELD(name, 's','m','l','xl','xxl')");
     }
+
+    public function price_format($value)
+    {
+        return 'Rp' . number_format($value, 0, ',', '.');
+    }
+
+    public function price_format2($value)
+    {
+        return number_format($value, 0, ',', '.');
+    }
+
+    public function discount_format($value)
+    {
+        return number_format($value, 0, ',', '.') . '%';
+    }
 }

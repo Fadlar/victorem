@@ -1,30 +1,5 @@
 @extends('layouts.app')
 
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#addToCartForm').on('submit', function(e) {
-                e.preventDefault(); // Mencegah formulir dikirim secara default
-
-                // Kirim data ke endpoint /cart menggunakan AJAX
-                $.ajax({
-                    method: 'POST',
-                    url: '/cart',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        // Handle respon dari server (jika diperlukan)
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        // Handle kesalahan (jika diperlukan)
-                        console.log(error.responseJSON);
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
-
 @section('content')
     <!-- Shop Details Section Begin -->
     <section class="shop-details">
@@ -72,33 +47,38 @@
                     <div class="col-lg-8">
                         <div class="product__details__text">
                             <h4>{{ $product->name }}</h4>
-                            <h3>$270.00 <span>70.00</span></h3>
-                            <form id="addToCartForm" action="/cart" method="post">
+                            @if ($product->discount > 0 || $product->discount !== null)
+                                <h3>{{ $product->price_format($product->price - $product->discount) }}<span>{{ $product->price_format($product->price) }}</span></h3>
+                            @endif
+                            <form action="/cart" method="post">
                                 @csrf
                                 <div class="product__details__option">
                                     <div class="product__details__option__size">
                                         <span>Size:</span>
                                         @foreach ($product->sizes as $size)
                                             <label for="{{ $size->name }}">{{ $size->name }}
-                                                <input type="radio" name="size" id="{{ $size->name }}" value="{{ $size->id }}">
+                                                <input type="radio" name="size" id="{{ $size->name }}" value="{{ $size->name }}">
                                             </label>
                                         @endforeach
+                                        @error('size')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="product__details__cart__option">
                                     <div class="quantity">
                                         <div class="pro-qty">
                                             <input type="text" name="quantity" value="1">
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         </div>
                                     </div>
-                                    <button type="submit" class="primary-btn border-0">add to cart</button>
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    @if ($out_of_stock > 0)
+                                        <button type="submit" class="primary-btn border-0">add to cart</button>
+                                    @else
+                                        <button type="button" disabled class="primary-btn border-0">sold out</button>
+                                    @endif
                                 </div>
                             </form>
-
-                            <div class="product__details__btns__option">
-                                <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
-                            </div>
                             <ul style="list-style: none;">
                                 <li><span>Categories:</span>
                                     @foreach ($product->categories as $category)

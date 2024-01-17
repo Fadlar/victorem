@@ -62,17 +62,26 @@
             <div class="row product__filter">
                 @forelse ($products as $product)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
-                        <div class="product__item">
+                        <div class="product__item {{ !$product->sizes->sum('stock') ? 'sale' : '' }}">
                             <div class="product__item__pic set-bg" data-setbg="{{ '/storage/' . $product->images[0]['url'] }}">
-                                <span class="label">50% OFF</span>
-                                <ul class="product__hover">
-                                    <li><a href="#"><img src="{{ asset('assets/img/icon/heart.png') }}" alt=""></a></li>
-                                </ul>
+                                @if (!$product->sizes->sum('stock'))
+                                    <span class="label">Sold out</span>
+                                @else
+                                    @if ($product->discount_percent !== null || $product->discount_percent !== 0)
+                                        <span class="label">{{ $product->discount_format($product->discount_percent) }} OFF</span>
+                                    @endif
+                                @endif
                             </div>
                             <div class="product__item__text">
                                 <h6>{{ $product->name }}</h6>
                                 <a href="/products/{{ $product->slug }}" class="add-cart">View Details</a>
-                                <h5>Rp67.24</h5>
+                                @if ($product->discount !== null || $product->discount !== 0)
+                                    <div class="d-flex" style="column-gap: 5px">
+                                        <h5>{{ $product->price_format($product->price - $product->discount) }}</h5>
+                                        <del class="text-secondary">{{ $product->price_format2($product->price) }}</del>
+                                    </div>
+                                @else
+                                @endif
                             </div>
                         </div>
                     </div>

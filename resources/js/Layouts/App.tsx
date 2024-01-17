@@ -1,6 +1,3 @@
-import "../bootstrap";
-import "../../css/app.css";
-
 import Header from "@/layouts/hydrogen/header";
 import Sidebar from "@/layouts/hydrogen/sidebar";
 import { t } from "@/utils/lang";

@@ -18,7 +18,7 @@ export default function Header() {
                     <Link href="#">
                         <img src={"/assets/img/icon/heart.png"} alt="" />
                     </Link>
-                    <Link href="/carts">
+                    <Link href="/cart">
                         <img src={"/assets/img/icon/cart.png"} alt="" />{" "}
                         <span>0</span>
                     </Link>
@@ -89,7 +89,7 @@ export default function Header() {
                                         alt=""
                                     />
                                 </Link>
-                                <Link href="#">
+                                <Link href="/cart">
                                     <img
                                         src={"/assets/img/icon/cart.png"}
                                         alt=""
