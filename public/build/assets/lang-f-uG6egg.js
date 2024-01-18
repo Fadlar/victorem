@@ -1,1 +1,0 @@
-import{q as s}from"./app-fn2mlbXl.js";function l(t,o={}){const{props:a}=s(),i="language"in a?a.language:{list:{}};let n=i.list[t]?i.list[t]:t;return Object.keys(o).forEach(r=>{n=n.replace(`:${r}`,o[r].toString())}),n}export{l as t};

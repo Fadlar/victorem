@@ -17,6 +17,10 @@ use Inertia\Inertia;
 
 Route::post('midtrans-webhook', [WebhookController::class, 'index']);
 
+Route::get('/redirecting', function () {
+    return inertia('Redirecting');
+});
+
 Route::middleware('locale')->group(function () {
     Route::get('pay/{order}', [OrderController::class, 'payMidtrans']);
     Route::get('/', [HomeController::class, 'index']);
