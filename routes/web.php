@@ -11,10 +11,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RajaongkirController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Web\ProductWebController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::post('midtrans-webhook', [WebhookController::class, 'index']);
+
 Route::middleware('locale')->group(function () {
+    Route::get('pay/{order}', [OrderController::class, 'payMidtrans']);
     Route::get('/', [HomeController::class, 'index']);
     Route::prefix('products')->group(function () {
         Route::get('{product:slug}', [ProductWebController::class, 'show']);
@@ -32,9 +36,6 @@ Route::middleware('locale')->group(function () {
             Route::get('cost/{subdistrict_id}', [RajaongkirController::class, 'cost']);
         });
 
-        Route::prefix('order')->group(function () {
-            Route::post('', [OrderController::class, 'store']);
-        });
 
         Route::prefix('language')->controller(LanguageController::class)->group(function () {
             Route::get('', 'index');
@@ -52,8 +53,12 @@ Route::middleware('locale')->group(function () {
         });
 
         Route::prefix('checkout')->group(function () {
-            Route::get('{order}', [OrderController::class, 'show']);
+            Route::get('{order:order_id}', [OrderController::class, 'show']);
             Route::post('', [OrderController::class, 'checkout']);
+        });
+
+        Route::prefix('order')->group(function () {
+            Route::post('{order}', [OrderController::class, 'checkout2']);
         });
 
         Route::prefix('ecommerce')->name('ecommerce.')->group(function () {

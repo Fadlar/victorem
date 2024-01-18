@@ -8,30 +8,27 @@ import { Button } from "@/components/ui/button";
 import { toCurrency } from "@/utils/to-currency";
 import { Title, Text } from "@/components/ui/text";
 import { useCart } from "@/store/quick-cart/cart.context";
+import { NumericFormat } from "react-number-format";
+import { useEffect, useState } from "react";
 
 export default function OrderSummery({
     isLoading,
     className,
+    order,
+    cost,
 }: {
     className?: string;
     isLoading?: boolean;
+    order: any;
+    cost: any;
 }) {
-    // const params = useParams();
-    // const {
-    //     items,
-    //     total,
-    //     addItemToCart,
-    //     removeItemFromCart,
-    //     clearItemFromCart,
-    // } = useCart();
-    // const { price: subtotal } = usePrice(
-    //     items && {
-    //         amount: total,
-    //     },
-    // );
-    // const { price: totalPrice } = usePrice({
-    //     amount: total,
-    // });
+    const [total, setTotal] = useState<number>(Number(order.amount));
+    useEffect(() => {
+        if (cost !== null) {
+            setTotal(Number(order.amount) + cost.cost[0]["value"]);
+        }
+    }, [cost, order.amount, setTotal]);
+
     return (
         <div
             className={cn(
@@ -43,17 +40,37 @@ export default function OrderSummery({
                 Your Order
             </Title>
             <div className="rounded-lg border border-gray-200 p-4 @xs:p-6 @5xl:rounded-none @5xl:border-none @5xl:px-0">
-                <div className="flex justify-between rounded-tl-lg rounded-tr-lg border-b border-gray-200 pb-4 @xs:pb-6">
-                    Ordered items
-                    <Link href={routes.eCommerce.cart}>
-                        <Button
-                            tag="span"
-                            variant="text"
-                            className="h-auto w-auto p-0 text-primary underline hover:text-gray-1000"
-                        >
-                            Edit Cart
-                        </Button>
-                    </Link>
+                <div className="rounded-tl-lg rounded-tr-lg border-b border-gray-200 pb-4 @xs:pb-6">
+                    {order.order_items.map((item: any, key: number) => (
+                        <div key={key} className="flex justify-between mb-2">
+                            <div>
+                                <span className="block font-medium">
+                                    {item.product.name}
+                                </span>
+                                <div className="block text-xs mt-1">
+                                    {item.quantity} x{" "}
+                                    <NumericFormat
+                                        displayType="text"
+                                        thousandSeparator="."
+                                        decimalSeparator=","
+                                        decimalScale={0}
+                                        prefix="Rp"
+                                        value={item.price}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <NumericFormat
+                                    displayType="text"
+                                    thousandSeparator="."
+                                    decimalSeparator=","
+                                    decimalScale={2}
+                                    prefix="Rp"
+                                    value={item.amount}
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
                 <div className="pt-4 @xl:pt-6">
                     {/* <OrderProducts
@@ -66,26 +83,62 @@ export default function OrderSummery({
                     <div className="mb-4 flex items-center justify-between last:mb-0">
                         Subtotal
                         <Text as="span" className="font-medium text-gray-900">
-                            123 {/* {subtotal} */}
+                            <NumericFormat
+                                displayType="text"
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                decimalScale={2}
+                                prefix="Rp"
+                                value={order.original_price}
+                            />
                         </Text>
                     </div>
                     <div className="mb-4 flex items-center justify-between last:mb-0">
-                        Tax
+                        Discount
                         <Text as="span" className="font-medium text-gray-900">
-                            {toCurrency(0)}
+                            <NumericFormat
+                                displayType="text"
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                decimalScale={2}
+                                prefix="Rp"
+                                value={order.discount}
+                            />
                         </Text>
                     </div>
                     <div className="mb-4 flex items-center justify-between last:mb-0">
                         Shipping
-                        <Text as="span" className="font-medium text-gray-900">
-                            {toCurrency(0)}
-                        </Text>
+                        {cost !== null ? (
+                            <Text
+                                as="span"
+                                className="font-medium text-gray-900"
+                            >
+                                <NumericFormat
+                                    displayType="text"
+                                    thousandSeparator="."
+                                    decimalSeparator=","
+                                    decimalScale={2}
+                                    prefix="Rp"
+                                    value={cost.cost[0]["value"]}
+                                />
+                            </Text>
+                        ) : (
+                            <Text as="span" className="text-gray-600">
+                                Calculating...
+                            </Text>
+                        )}
                     </div>
                     <div className="flex items-center justify-between border-t border-gray-200 py-4 text-base font-bold text-gray-1000">
                         Total
                         <Text>
-                            12
-                            {/* {totalPrice} */}
+                            <NumericFormat
+                                displayType="text"
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                decimalScale={2}
+                                prefix="Rp"
+                                value={total}
+                            />
                         </Text>
                     </div>
                 </div>

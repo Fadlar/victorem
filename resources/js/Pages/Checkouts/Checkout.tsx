@@ -1,3 +1,4 @@
+import InputError from "@/Components/InputError";
 import { PhoneNumber } from "@/components/ui/phone-input";
 import LithiumLayout from "@/layouts/lithium/lithium-layout";
 import OrderSummery from "@/shared/ecommerce/checkout/order-summery";
@@ -7,7 +8,7 @@ import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { PiSpinner } from "react-icons/pi";
 import { NumericFormat } from "react-number-format";
-import { Button, Input, Title } from "rizzui";
+import { Button, Input, Textarea, Title } from "rizzui";
 
 export default function Checkout({ className, order }: any) {
     const [errors, setErrors] = useState<any>(null);
@@ -27,6 +28,8 @@ export default function Checkout({ className, order }: any) {
         city_id: null,
         subdistrict_id: null,
         postal_code: "",
+        address: "",
+        notes: "",
         phone_number: "",
         cost: null,
     });
@@ -119,14 +122,14 @@ export default function Checkout({ className, order }: any) {
     const handleSubmit = (e: { preventDefault: () => void }) => {
         e.preventDefault();
         router.post(
-            "/order",
+            `/order/${order.id}`,
             {
                 ...data,
             },
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    //
+                    router.visit(`/pay/${order.id}`);
                 },
                 onError: (error) => setErrors(error),
                 onStart: () => setLoading(true),
@@ -194,6 +197,17 @@ export default function Checkout({ className, order }: any) {
                                         value={data.last_name}
                                         placeholder="Enter your last name"
                                         required
+                                    />
+                                </div>
+                                <div className="col-span-full">
+                                    <Textarea
+                                        label="Address"
+                                        placeholder="Enter your detail address"
+                                        name="address"
+                                        onChange={handleChange}
+                                        value={data.address}
+                                        required
+                                        rows={3}
                                     />
                                 </div>
                                 <div>
@@ -345,6 +359,19 @@ export default function Checkout({ className, order }: any) {
                                         value={data.phone_number}
                                         onChange={handleNumberPhone}
                                     />
+                                    <InputError
+                                        message={errors && errors.phone_number}
+                                    />
+                                </div>
+                                <div className="col-span-full">
+                                    <Textarea
+                                        label="Notes (Optional)"
+                                        placeholder="Enter your notes"
+                                        name="notes"
+                                        onChange={handleChange}
+                                        value={data.notes}
+                                        rows={3}
+                                    />
                                 </div>
                                 <Title
                                     as="h3"
@@ -449,7 +476,7 @@ export default function Checkout({ className, order }: any) {
                                                 Payment via Midtrans
                                             </div>
                                         </div>
-                                        <div className="flex items-center justify-center border bg-gray-50 rounded-b-md h-52">
+                                        <div className="flex items-center justify-center border bg-gray-50 rounded-b-md h-56">
                                             <div className="text-center">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -511,7 +538,11 @@ export default function Checkout({ className, order }: any) {
                         </div>
                     </div>
 
-                    <OrderSummery isLoading={isLoading} />
+                    <OrderSummery
+                        order={order}
+                        cost={data.cost}
+                        isLoading={isLoading}
+                    />
                 </div>
             </form>
         </LithiumLayout>

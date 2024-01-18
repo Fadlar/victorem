@@ -93,11 +93,7 @@ class CartController extends Controller
 
         foreach ($request->cart_updates as $cart) {
             $currentCart = Cart::find($cart['cart_id'])->load(['product', 'product.sizes']);
-            $currentStock = $currentCart->product->sizes->where('name', $currentCart->size)->first()['stock'];
 
-            // if ($cart['new_quantity'] > $currentStock) {
-            //     return;
-            // }
             $currentCart->update([
                 'quantity' => $cart['new_quantity'],
             ]);
