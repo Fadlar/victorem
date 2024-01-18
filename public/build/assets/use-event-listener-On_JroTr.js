@@ -1,1 +1,0 @@
-import{r as e}from"./app-QfXM7FYG.js";const i=typeof window<"u"?e.useLayoutEffect:e.useEffect;function d(s,n,r,u){const c=e.useRef(n);i(()=>{c.current=n},[n]),e.useEffect(()=>{const t=(r==null?void 0:r.current)??window;if(!(t&&t.addEventListener))return;const f=o=>c.current(o);return t.addEventListener(s,f,u),()=>{t.removeEventListener(s,f,u)}},[s,r,u])}export{d as a,i as u};

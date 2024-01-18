@@ -115,10 +115,10 @@ export default function CreateOrder({
 
                     <div className="pb-7 pt-10 @container @5xl:col-span-4 @5xl:py-0 @6xl:col-span-3">
                         <CustomerInfo />
-                        <OrderSummery
+                        {/* <OrderSummery
                             isLoading={isLoading}
                             className="static"
-                        />
+                        /> */}
                     </div>
                 </div>
             </form>

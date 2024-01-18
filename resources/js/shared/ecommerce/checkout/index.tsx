@@ -115,7 +115,7 @@ export default function CheckoutPageWrapper({
                         </div>
                     </div>
 
-                    <OrderSummery isLoading={isLoading} />
+                    {/* <OrderSummery isLoading={isLoading} /> */}
                 </div>
             </form>
         </FormProvider>
