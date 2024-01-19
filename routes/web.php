@@ -2,14 +2,12 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RajaongkirController;
-use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Web\ProductWebController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +23,12 @@ Route::middleware('locale')->group(function () {
     Route::get('pay/{order}', [OrderController::class, 'payMidtrans']);
     Route::get('/', [HomeController::class, 'index']);
     Route::prefix('products')->group(function () {
+        Route::get('', [ProductWebController::class, 'index']);
         Route::get('{product:slug}', [ProductWebController::class, 'show']);
     });
+
+    Route::get('about', [HomeController::class, 'about']);
+    Route::get('contact', [HomeController::class, 'contact']);
 
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
@@ -39,6 +41,8 @@ Route::middleware('locale')->group(function () {
             Route::get('subdistrict/{city_id}', [RajaongkirController::class, 'subdistrict']);
             Route::get('cost/{subdistrict_id}', [RajaongkirController::class, 'cost']);
         });
+
+        Route::get('orders', [OrderController::class, 'index'])->name('orders');
 
 
         Route::prefix('language')->controller(LanguageController::class)->group(function () {
@@ -63,6 +67,7 @@ Route::middleware('locale')->group(function () {
 
         Route::prefix('order')->group(function () {
             Route::post('{order}', [OrderController::class, 'checkout2']);
+            Route::get('{order:order_id}/invoice', [OrderController::class, 'invoice']);
         });
 
         Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
@@ -73,8 +78,6 @@ Route::middleware('locale')->group(function () {
             Route::put('change-product-status/{product:slug}', [ProductController::class, 'changeStatus']);
             Route::delete('product-image/{productImage}', [ProductController::class, 'deleteSingleProductImage']);
             Route::put('product-image/{product:slug}', [ProductController::class, 'reorderImage']);
-            Route::resource('discounts', DiscountController::class);
-            Route::resource('vouchers', VoucherController::class);
         });
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

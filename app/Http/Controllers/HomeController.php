@@ -14,4 +14,14 @@ class HomeController extends Controller
             'products' => Product::where('status', ProductStatus::PUBLISH)->with(['images', 'categories', 'sizes'])->latest()->limit(8)->get()
         ]);
     }
+
+    public function about()
+    {
+        return view('home.about');
+    }
+
+    public function contact()
+    {
+        return view('home.contact');
+    }
 }

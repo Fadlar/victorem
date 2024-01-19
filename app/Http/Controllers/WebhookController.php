@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\PaymentLog;
 use Illuminate\Http\Request;
@@ -58,17 +60,31 @@ class WebhookController extends Controller
         $logData = [
             'status' => $transactionStatus,
             'raw_response' => json_encode($request->all()),
-            'order_id' => $realOrderId[0],
+            'payment_id' => $realOrderId[0],
             'payment_type' => $type
         ];
 
         PaymentLog::create($logData);
-        $payment->save();
 
+        $payment->save();
+        $payment = Payment::find(1);
         if ($payment->status === 'success') {
             $payment->order()->update([
                 'status' => \App\Enums\OrderStatus::PAYMENT_SUCCESS
             ]);
+
+            $orderItems = OrderItem::where('order_id', $payment->order->id)->with('product')->get();
+
+            foreach ($orderItems as $orderItem) {
+                $size = $orderItem->product->sizes()->where('name', $orderItem->size)->firstOr(fn () => false);
+                if ($size) {
+                    if ($size->quantity !== 0 || $size->quantity !== null) {
+                        $size->update([
+                            'stock' => $size->stock - $orderItem->quantity
+                        ]);
+                    }
+                }
+            }
         }
 
         return response()->json('oke');

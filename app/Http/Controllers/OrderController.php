@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\Payment;
 use Carbon\Carbon;
@@ -10,8 +11,20 @@ use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
+    public function index(Request $request)
+    {
+        $orders = $request->user()->orders->load('orderItems');
+        return view('home.order', [
+            'orders' => $orders
+        ]);
+    }
+
     public function show(Order $order)
     {
+        if ($order->status === OrderStatus::PAYMENT_SUCCESS->value || $order->status === OrderStatus::CANCELED->value || $order->status === OrderStatus::CANCELED->value) {
+            return redirect()->route('orders');
+        }
+
         return inertia('Checkouts/Checkout', [
             'order' => $order->load('orderItems', 'orderItems.product')
         ]);
@@ -27,7 +40,7 @@ class OrderController extends Controller
         }
 
         $order = $request->user()->orders()->create([
-            'order_id' => Str::upper(Str::random(10)),
+            'order_id' => 'INV' . now()->format('YmdHis') . rand(1000, 9999),
             'weight' => $weight,
             'original_price' =>  $request->total_original_price,
             'discount' =>  $request->total_discount_amount,
@@ -38,6 +51,7 @@ class OrderController extends Controller
             $order->orderItems()->create([
                 'product_id' => $orderItem->product->id,
                 'quantity' => $orderItem->quantity,
+                'size' => $orderItem->size,
                 'price' => $orderItem->product->price,
                 'discount' => $orderItem->product->discount,
                 'amount' => $orderItem->product->discount !== null ? ($orderItem->product->price - $orderItem->product->discount) * $orderItem->quantity : $orderItem->product->price * $orderItem->quantity,
@@ -105,7 +119,7 @@ class OrderController extends Controller
 
         $customerDetails = [
             'first_name' => $order->first_name,
-            'last_name' => $order->first_name,
+            'last_name' => $order->last_name,
             'email' => $request->user()->email,
             'phone' => $order->phone_number
         ];
@@ -148,5 +162,10 @@ class OrderController extends Controller
         return inertia('Pay', [
             'payment' => $order->payment
         ]);
+    }
+
+    public function invoice()
+    {
+        return inertia('Checkouts/Invoice');
     }
 }

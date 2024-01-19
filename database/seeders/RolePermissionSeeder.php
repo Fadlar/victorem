@@ -183,7 +183,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         $adminUser = \App\Models\User::find(1);
-        $adminUser->assignRole('super admin');
+        $adminUser->assignRole('admin');
         $teamUser = \App\Models\User::find(2);
         $teamUser->assignRole('team');
         $agentUser = \App\Models\User::find(3);

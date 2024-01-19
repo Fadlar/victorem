@@ -67,7 +67,7 @@
                                 @if (!$product->sizes->sum('stock'))
                                     <span class="label">Sold out</span>
                                 @else
-                                    @if ($product->discount_percent !== null || $product->discount_percent !== 0)
+                                    @if ($product->discount_percent !== null && $product->discount_percent !== 0)
                                         <span class="label">{{ $product->discount_format($product->discount_percent) }} OFF</span>
                                     @endif
                                 @endif
@@ -75,18 +75,26 @@
                             <div class="product__item__text">
                                 <h6>{{ $product->name }}</h6>
                                 <a href="/products/{{ $product->slug }}" class="add-cart">View Details</a>
-                                @if ($product->discount !== null || $product->discount !== 0)
+                                @if ($product->discount !== null && $product->discount !== 0)
                                     <div class="d-flex" style="column-gap: 5px">
                                         <h5>{{ $product->price_format($product->price - $product->discount) }}</h5>
                                         <del class="text-secondary">{{ $product->price_format2($product->price) }}</del>
                                     </div>
                                 @else
+                                    @if ($product->discount !== null && $product->discount !== 0)
+                                        <div class="d-flex" style="column-gap: 5px">
+                                            <h5>{{ $product->price_format($product->price - $product->discount) }}</h5>
+                                            <del class="text-secondary">{{ $product->price_format2($product->price) }}</del>
+                                        </div>
+                                    @else
+                                        <h5>{{ $product->price_format($product->price) }}</h5>
+                                    @endif
                                 @endif
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div>Product not found.</div>
+                    <div class="text-center col-12">Product not found.</div>
                 @endforelse
             </div>
         </div>
