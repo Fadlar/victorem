@@ -1,11 +1,12 @@
-import { DUMMY_ID } from "@/config/constants";
 import { routes } from "@/config/routes";
 import {
-    PiArticleDuotone,
     PiChartBarDuotone,
+    PiDownloadDuotone,
     PiFolderLockDuotone,
     PiGearDuotone,
+    PiShoppingBagDuotone,
     PiShoppingCartDuotone,
+    PiTagDuotone,
     PiUserCircleDuotone,
     PiUsersDuotone,
 } from "react-icons/pi";
@@ -29,78 +30,34 @@ export const menuItems = [
     },
     // label end
     {
-        name: "E-Commerce",
-        href: "#",
-        icon: <PiShoppingCartDuotone />,
-        roles: ["super admin", "admin", "team"],
-        dropdownItems: [
-            {
-                name: "Products",
-                href: routes.eCommerce.products,
-                permission: "viewProduct",
-            },
-            {
-                name: "Product Categories",
-                href: routes.eCommerce.categories,
-                permission: "viewCategory",
-            },
-            {
-                name: "Orders",
-                href: routes.eCommerce.orders,
-                permission: "viewOrder",
-            },
-            {
-                name: "Reviews",
-                href: routes.eCommerce.reviews,
-                permission: "viewTestimonial",
-            },
-            {
-                name: "Vouchers",
-                href: routes.eCommerce.vouchers,
-                permission: "viewVoucher",
-            },
-        ],
+        name: "Products",
+        href: routes.eCommerce.products,
+        icon: <PiShoppingBagDuotone />,
+        permission: "viewDashboard",
     },
     {
-        name: "Articles",
-        href: "#",
-        icon: <PiArticleDuotone />,
-        roles: ["super admin", "admin"],
-        dropdownItems: [
-            {
-                name: "List Article",
-                href: routes.support.inbox,
-                permission: "viewArticle",
-            },
-            {
-                name: "Create Article",
-                href: routes.support.snippets,
-                permission: "createArticle",
-            },
-            {
-                name: "Article Categories",
-                href: routes.support.snippets,
-                permission: "viewCategoryArticle",
-            },
-        ],
+        name: "Categories",
+        href: routes.eCommerce.categories,
+        icon: <PiTagDuotone />,
+        permission: "viewDashboard",
+    },
+    {
+        name: "Orders",
+        href: "/ecommerce/orders",
+        icon: <PiShoppingCartDuotone />,
+        permission: "viewDashboard",
+    },
+    {
+        name: "Reports",
+        href: "/reports",
+        icon: <PiDownloadDuotone />,
+        permission: "viewDashboard",
     },
     {
         name: "Users",
-        href: "#",
+        href: "/users",
         icon: <PiUsersDuotone />,
-        roles: ["super admin", "admin", "team"],
-        dropdownItems: [
-            {
-                name: "List User",
-                href: routes.invoice.home,
-                permission: "viewUser",
-            },
-            {
-                name: "Create User",
-                href: routes.invoice.details(DUMMY_ID),
-                permission: "createUser",
-            },
-        ],
+        permission: "viewDashboard",
     },
     {
         name: "Roles & Permissions",
@@ -119,8 +76,8 @@ export const menuItems = [
     },
     {
         name: "Settings",
-        href: routes.analytics,
+        href: "/settings",
         icon: <PiGearDuotone />,
-        permission: "setting",
+        permission: "viewDashboard",
     },
 ];

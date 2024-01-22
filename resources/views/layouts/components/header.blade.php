@@ -64,7 +64,6 @@
                                 <ul class="dropdown">
                                     <li><a href="/orders">Orders</a></li>
                                     @auth
-                                        <li><a href="/profile">Invoices</a></li>
                                         <li><a href="/profile">Profile</a></li>
                                         <li>
                                             <form action="/logout" method="POST">
@@ -83,7 +82,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="{{ asset('assets/img/icon/search.png') }}" alt=""></a>
+                        <a href="/products"><img src="{{ asset('assets/img/icon/search.png') }}" alt=""></a>
                         <a href="/cart"><img src="{{ asset('assets/img/icon/cart.png') }}" alt=""> <span>0</span></a>
                     </div>
                 </div>

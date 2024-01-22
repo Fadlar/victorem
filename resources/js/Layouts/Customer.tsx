@@ -5,7 +5,7 @@ import { PropsWithChildren, useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Toaster } from "react-hot-toast";
 
-export default function App({
+export default function Customer({
     children,
     title,
 }: PropsWithChildren & { title?: string }) {

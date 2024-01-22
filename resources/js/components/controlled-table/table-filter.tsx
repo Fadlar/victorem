@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-// import dynamic from "next/dynamic";
+import React, { lazy, useState } from "react";
+
 import { ToggleColumns } from "@/components/ui/table";
 import { PiMagnifyingGlassBold, PiFunnel, PiXBold } from "react-icons/pi";
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Title } from "@/components/ui/text";
 import cn from "@/utils/class-names";
 import { useMedia } from "@/hooks/use-media";
-// const Drawer = dynamic(
-//     () => import("@/components/ui/drawer").then((module) => module.Drawer),
-//     { ssr: false },
-// );
+
+const Drawer = lazy(() =>
+    import("@/components/ui/drawer").then((module) => ({
+        default: module.Drawer,
+    })),
+);
 
 function FilterDrawerView({
     isOpen,
@@ -26,41 +28,40 @@ function FilterDrawerView({
     isOpen?: boolean;
 }>) {
     return (
-        <></>
-        // <Drawer
-        //     size="sm"
-        //     isOpen={isOpen ?? false}
-        //     onClose={() => setOpenDrawer(false)}
-        //     overlayClassName="dark:bg-opacity-20 backdrop-blur-md"
-        //     containerClassName="dark:bg-gray-100"
-        // >
-        //     <div className="flex h-full flex-col p-5">
-        //         <div className="-mx-5 mb-6 flex items-center justify-between border-b border-gray-200 px-5 pb-4">
-        //             <Title as="h5">{drawerTitle}</Title>
-        //             <ActionIcon
-        //                 size="sm"
-        //                 rounded="full"
-        //                 variant="text"
-        //                 title={"Close Filter"}
-        //                 onClick={() => setOpenDrawer(false)}
-        //             >
-        //                 <PiXBold className="h-4 w-4" />
-        //             </ActionIcon>
-        //         </div>
-        //         <div className="flex-grow">
-        //             <div className="grid grid-cols-1 gap-6 [&_.price-field>span.mr-2]:mb-1.5 [&_.price-field]:flex-col [&_.price-field]:items-start [&_.react-datepicker-wrapper]:w-full [&_.react-datepicker-wrapper_.w-72]:w-full [&_.text-gray-500]:text-gray-700 [&_button.h-9]:h-10 sm:[&_button.h-9]:h-11 [&_label>.h-9]:h-10 sm:[&_label>.h-9]:h-11 [&_label>.w-24.h-9]:w-full">
-        //                 {children}
-        //             </div>
-        //         </div>
-        //         <Button
-        //             size="lg"
-        //             onClick={() => setOpenDrawer(false)}
-        //             className="mt-5 h-11 w-full text-sm"
-        //         >
-        //             Show Results
-        //         </Button>
-        //     </div>
-        // </Drawer>
+        <Drawer
+            size="sm"
+            isOpen={isOpen ?? false}
+            onClose={() => setOpenDrawer(false)}
+            overlayClassName="dark:bg-opacity-20 backdrop-blur-md"
+            containerClassName="dark:bg-gray-100"
+        >
+            <div className="flex h-full flex-col p-5">
+                <div className="-mx-5 mb-6 flex items-center justify-between border-b border-gray-200 px-5 pb-4">
+                    <Title as="h5">{drawerTitle}</Title>
+                    <ActionIcon
+                        size="sm"
+                        rounded="full"
+                        variant="text"
+                        title={"Close Filter"}
+                        onClick={() => setOpenDrawer(false)}
+                    >
+                        <PiXBold className="h-4 w-4" />
+                    </ActionIcon>
+                </div>
+                <div className="flex-grow">
+                    <div className="grid grid-cols-1 gap-6 [&_.price-field>span.mr-2]:mb-1.5 [&_.price-field]:flex-col [&_.price-field]:items-start [&_.react-datepicker-wrapper]:w-full [&_.react-datepicker-wrapper_.w-72]:w-full [&_.text-gray-500]:text-gray-700 [&_button.h-9]:h-10 sm:[&_button.h-9]:h-11 [&_label>.h-9]:h-10 sm:[&_label>.h-9]:h-11 [&_label>.w-24.h-9]:w-full">
+                        {children}
+                    </div>
+                </div>
+                <Button
+                    size="lg"
+                    onClick={() => setOpenDrawer(false)}
+                    className="mt-5 h-11 w-full text-sm"
+                >
+                    Show Results
+                </Button>
+            </div>
+        </Drawer>
     );
 }
 

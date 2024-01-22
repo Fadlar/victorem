@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ManageReportController;
+use App\Http\Controllers\Admin\ManageUserController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\OrderController;
@@ -29,10 +34,6 @@ Route::middleware('locale')->group(function () {
 
     Route::get('about', [HomeController::class, 'about']);
     Route::get('contact', [HomeController::class, 'contact']);
-
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
         Route::prefix('location')->group(function () {
@@ -70,15 +71,25 @@ Route::middleware('locale')->group(function () {
             Route::get('{order:order_id}/invoice', [OrderController::class, 'invoice']);
         });
 
-        Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
-            // Categories
-            Route::resource('categories', CategoryController::class)->except('show', 'create')->parameters(['categories' => 'category:slug']);
-            // Products
-            Route::resource('products', ProductController::class)->parameters(['products' => 'product:slug']);
-            Route::put('change-product-status/{product:slug}', [ProductController::class, 'changeStatus']);
-            Route::delete('product-image/{productImage}', [ProductController::class, 'deleteSingleProductImage']);
-            Route::put('product-image/{product:slug}', [ProductController::class, 'reorderImage']);
+        Route::middleware('role:admin')->group(function () {
+            Route::get('dashboard', [DashboardController::class, 'index']);
+            Route::get('reports', [ManageReportController::class, 'index']);
+            Route::get('users', [ManageUserController::class, 'index']);
+            Route::get('settings', [SettingController::class, 'index']);
+
+            Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
+                // Categories
+                Route::resource('categories', CategoryController::class)->except('show', 'create')->parameters(['categories' => 'category:slug']);
+                // Products
+                Route::resource('products', ProductController::class)->parameters(['products' => 'product:slug']);
+                Route::put('change-product-status/{product:slug}', [ProductController::class, 'changeStatus']);
+                Route::delete('product-image/{productImage}', [ProductController::class, 'deleteSingleProductImage']);
+                Route::put('product-image/{product:slug}', [ProductController::class, 'reorderImage']);
+
+                Route::resource('orders', ManageOrderController::class)->except('create', 'store');
+            });
         });
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

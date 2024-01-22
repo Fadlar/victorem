@@ -21,8 +21,8 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if ($order->status === OrderStatus::PAYMENT_SUCCESS->value || $order->status === OrderStatus::CANCELED->value || $order->status === OrderStatus::CANCELED->value) {
-            return redirect()->route('orders');
+        if ($order->status !== OrderStatus::PENDING->value || $order->status !== OrderStatus::PAYMENT->value) {
+            return redirect("/order/$order->order_id/invoice");
         }
 
         return inertia('Checkouts/Checkout', [
@@ -40,7 +40,7 @@ class OrderController extends Controller
         }
 
         $order = $request->user()->orders()->create([
-            'order_id' => 'INV' . now()->format('YmdHis') . rand(1000, 9999),
+            'order_id' => 'INV' . now()->format('Ym') . rand(1000, 9999),
             'weight' => $weight,
             'original_price' =>  $request->total_original_price,
             'discount' =>  $request->total_discount_amount,
@@ -164,8 +164,14 @@ class OrderController extends Controller
         ]);
     }
 
-    public function invoice()
+    public function invoice(Order $order)
     {
-        return inertia('Checkouts/Invoice');
+        if ($order->status === OrderStatus::PENDING->value) {
+            return redirect('/checkout/' . $order->order_id);
+        }
+
+        return inertia('Checkouts/Invoice', [
+            'invoice' => $order->load('user', 'payment', 'orderItems', 'orderItems.product', 'orderItems.product.images')
+        ]);
     }
 }

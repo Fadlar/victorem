@@ -3,6 +3,8 @@ import { useCart } from "@/store/quick-cart/cart.context";
 import { Title, Text } from "@/components/ui/text";
 import { toCurrency } from "@/utils/to-currency";
 import { CartItem } from "@/types";
+import { NumericFormat } from "react-number-format";
+import { Asset } from "@/shared/roles-permissions/utils";
 
 const columns = [
     {
@@ -10,19 +12,19 @@ const columns = [
         dataIndex: "product",
         key: "product",
         width: 250,
-        render: (_: any, row: CartItem) => (
+        render: (_: any, row: any) => (
             <div className="flex items-center">
                 <div className="relative aspect-square w-12 overflow-hidden rounded-lg">
                     <img
-                        alt={row.name}
-                        src={row.image}
+                        alt={row.product.name}
+                        src={Asset(row.product.images[0].url)}
                         sizes="(max-width: 768px) 100vw"
                         className="object-cover"
                     />
                 </div>
                 <div className="ms-4">
                     <Title as="h6" className="!text-sm font-medium">
-                        {row.name}
+                        {row.product.name}
                     </Title>
                 </div>
             </div>
@@ -34,7 +36,16 @@ const columns = [
         key: "price",
         width: 200,
         render: (price: string) => (
-            <Text className="text-end text-sm">{toCurrency(price)}</Text>
+            <Text className="text-end text-sm">
+                <NumericFormat
+                    displayType="text"
+                    value={price}
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    decimalScale={2}
+                    prefix="Rp"
+                />
+            </Text>
         ),
     },
     {
@@ -51,19 +62,25 @@ const columns = [
 
     {
         title: <HeaderCell title="Price" align="right" />,
-        dataIndex: "price",
-        key: "price",
+        dataIndex: "amount",
+        key: "amount",
         width: 200,
-        render: (price: number, row: CartItem) => (
+        render: (amount: number, row: CartItem) => (
             <Text className="text-end text-sm">
-                {toCurrency(price * row.quantity)}
+                <NumericFormat
+                    displayType="text"
+                    prefix="Rp"
+                    value={amount}
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    decimalScale={2}
+                />
             </Text>
         ),
     },
 ];
 
-export default function OrderViewProducts() {
-    const { items } = useCart();
+export default function OrderViewProducts({ items }: any) {
     return (
         <Table
             data={items}

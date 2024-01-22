@@ -8,7 +8,7 @@
                     <div class="breadcrumb__text">
                         <h4>Shop</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
+                            <a href="/">Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                                 <ul class="nice-scroll">
                                                     <li><a href="/products">All</a></li>
                                                     @forelse ($categories as $category)
-                                                        <li><a href="/products?category={{ $category->slug }}">{{ $category->name }} ({{ $category->products->count() }})</a></li>
+                                                        <li><a class="{{ $category->slug === request()->category ? 'text-dark' : '' }}" href="/products?category={{ $category->slug }}">{{ $category->name }} ({{ $category->products->count() }})</a></li>
                                                     @empty
                                                         <li><a href="#">No Category</a></li>
                                                     @endforelse

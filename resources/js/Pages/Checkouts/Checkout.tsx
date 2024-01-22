@@ -3,7 +3,7 @@ import { PhoneNumber } from "@/components/ui/phone-input";
 import LithiumLayout from "@/layouts/lithium/lithium-layout";
 import OrderSummery from "@/shared/ecommerce/checkout/order-summery";
 import cn from "@/utils/class-names";
-import { router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { PiSpinner } from "react-icons/pi";
@@ -140,6 +140,9 @@ export default function Checkout({ className, order }: any) {
 
     return (
         <LithiumLayout>
+            <Head>
+                <title>Checkout - Victorem</title>
+            </Head>
             <form
                 onSubmit={handleSubmit}
                 className={cn(
