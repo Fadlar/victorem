@@ -34,8 +34,9 @@ export default function Sidebar({ className }: { className?: string }) {
                 <div className="mt-4 pb-3 3xl:mt-6">
                     {menuItems.map((item, index) => {
                         const isActive = pathname === (item?.href as string);
-                        const pathnameExistInDropdowns: any =
+                        const pathnameExistInDropdowns: any = // @ts-ignore
                             item?.dropdownItems?.filter(
+                                // @ts-ignore
                                 (dropdownItem) =>
                                     dropdownItem.href === pathname,
                             );
@@ -47,8 +48,10 @@ export default function Sidebar({ className }: { className?: string }) {
                             <Fragment key={item.name + "-" + index}>
                                 {item?.href ? (
                                     <>
+                                        {/* @ts-ignore */}
                                         {item?.dropdownItems ? (
                                             <>
+                                                {/* @ts-ignore */}
                                                 {item?.roles.some((item1) =>
                                                     auth.user.roles.some(
                                                         (item2) =>
@@ -106,9 +109,12 @@ export default function Sidebar({ className }: { className?: string }) {
                                                             </div>
                                                         )}
                                                     >
+                                                        {/* @ts-ignore */}
                                                         {item?.dropdownItems?.map(
                                                             (
+                                                                // @ts-ignore
                                                                 dropdownItem,
+                                                                // @ts-ignore
                                                                 index,
                                                             ) => {
                                                                 const isChildActive =

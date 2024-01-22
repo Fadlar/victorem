@@ -1,1 +1,0 @@
-import{r as e,j as t}from"./app-61WsA6xm.js";function o({payment:r}){return e.useEffect(()=>{(()=>{window.location.href=r.snap_url})()},[r.snap_url]),t.jsx("div",{children:"Redirecting..."})}export{o as default};

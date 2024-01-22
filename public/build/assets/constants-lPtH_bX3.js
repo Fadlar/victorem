@@ -1,1 +1,0 @@
-const e="FC6723757651DB74",r={Administrator:"Administrator",Manager:"Manager",Sales:"Sales",Support:"Support",Developer:"Developer",HRD:"HR Department",RestrictedUser:"Restricted User",Customer:"Customer"};export{e as D,r as R};
