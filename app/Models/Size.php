@@ -10,4 +10,9 @@ class Size extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'stock'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

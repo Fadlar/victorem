@@ -1,8 +1,6 @@
 import App from "@/Layouts/App";
 import { routes } from "@/config/routes";
 import PageHeader from "@/shared/page-header";
-import { Link } from "@inertiajs/react";
-import React from "react";
 import { Button } from "rizzui";
 import OrdersTable from "./_shared/OrdersTable";
 
@@ -23,12 +21,12 @@ export default function Order({ orders }: any) {
                 title={pageHeader.title}
                 breadcrumb={pageHeader.breadcrumb}
             >
-                <Button
+                {/* <Button
                     tag="span"
                     className="w-full @lg:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
                 >
                     Filter
-                </Button>
+                </Button> */}
             </PageHeader>
             <OrdersTable data={orders} />
         </App>

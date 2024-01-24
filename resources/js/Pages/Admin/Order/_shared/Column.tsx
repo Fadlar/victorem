@@ -45,7 +45,7 @@ function getStatusBadge(status: string) {
             return (
                 <div className="flex items-center">
                     <Badge color="success" renderAsDot />
-                    <Text className="ms-2 font-medium text-primary-lighter">
+                    <Text className="ms-2 font-medium text-green-dark">
                         Shipped
                     </Text>
                 </div>

@@ -34,6 +34,11 @@ export const routes = {
         cart: "/ecommerce/cart",
         checkout: "/ecommerce/checkout",
         trackingId: (id: string) => `/ecommerce/tracking/${id}`,
+        // Manage User
+        users: "/admin/users",
+        createUser: "/admin/users/create",
+        editUser: (id: any) => `/admin/users/${id}/edit`,
+        showUser: (id: any) => `/admin/users/${id}`,
     },
     searchAndFilter: {
         realEstate: "/search/real-estate",

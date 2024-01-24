@@ -2,11 +2,17 @@ import { orderData } from "@/data/order-data";
 import { getWidgetColumns } from "@/shared/ecommerce/order/order-list/columns";
 import BasicTableWidget from "@/components/controlled-table/basic-table-widget";
 
-export default function RecentOrder({ className }: { className?: string }) {
+export default function RecentOrder({
+    className,
+    data,
+}: {
+    className?: string;
+    data: any;
+}) {
     return (
         <BasicTableWidget
             title={"Recent Order"}
-            data={orderData}
+            data={data}
             // @ts-ignore
             getColumns={getWidgetColumns}
             className={className}

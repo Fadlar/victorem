@@ -1,19 +1,18 @@
-import { Link } from "@inertiajs/react";
-import { Badge } from "@/components/ui/badge";
-import { ActionIcon } from "@/components/ui/action-icon";
+import ApplicationLogo from "@/Components/ApplicationLogo";
 import SearchWidget from "@/components/search/search";
+import SettingsButton from "@/components/settings/settings-button";
+import { ActionIcon } from "@/components/ui/action-icon";
+import { Badge } from "@/components/ui/badge";
+import HamburgerButton from "@/layouts/hamburger-button";
 import MessagesDropdown from "@/layouts/messages-dropdown";
 import NotificationDropdown from "@/layouts/notification-dropdown";
 import ProfileMenu from "@/layouts/profile-menu";
-import SettingsButton from "@/components/settings/settings-button";
-import HamburgerButton from "@/layouts/hamburger-button";
-import Logo from "@/components/logo";
+import cn from "@/utils/class-names";
 import {
-    PiChatCircleDotsFill,
     PiBellSimpleRingingFill,
+    PiChatCircleDotsFill,
     PiGearFill,
 } from "react-icons/pi";
-import cn from "@/utils/class-names";
 import Sidebar from "./helium-sidebar";
 
 function HeaderMenuRight() {
@@ -79,7 +78,7 @@ export default function Header() {
                     aria-label="Site Logo"
                     className="me-4 w-9 shrink-0 lg:me-5 xl:hidden"
                 >
-                    <Logo iconOnly={true} />
+                    <ApplicationLogo class="w-10" />
                 </a>
                 <SearchWidget />
             </div>

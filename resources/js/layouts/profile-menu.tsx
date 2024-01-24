@@ -15,14 +15,6 @@ const menuItems = [
         name: "My Profile",
         href: routes.profile,
     },
-    {
-        name: "Account Settings",
-        href: routes.forms.profileSettings,
-    },
-    {
-        name: "Activity Log",
-        href: "#",
-    },
 ];
 
 function DropdownMenu() {
@@ -56,7 +48,7 @@ function DropdownMenu() {
                     </Link>
                 ))}
             </div>
-            <div className="border-t border-gray-300 px-6 pb-6 pt-5">
+            <div className="px-6 pb-6">
                 <Button
                     className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
                     variant="text"

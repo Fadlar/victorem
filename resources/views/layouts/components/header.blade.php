@@ -62,8 +62,12 @@
                             <li>
                                 <a href="#">More</a>
                                 <ul class="dropdown">
+                                    @role('admin')
+                                        <li><a href="/dashboard">Dashboard</a></li>
+                                    @endrole
                                     <li><a href="/orders">Orders</a></li>
                                     @auth
+
                                         <li><a href="/profile">Profile</a></li>
                                         <li>
                                             <form action="/logout" method="POST">

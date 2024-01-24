@@ -1,21 +1,32 @@
 import App from "@/Layouts/App";
+import PageHeader from "@/shared/page-header";
 import { PageProps } from "@/types";
-import { Head } from "@inertiajs/react";
-import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
+
+const pageHeader = {
+    title: "Profile",
+    breadcrumb: [
+        {
+            href: "/profile",
+            name: "Profile",
+        },
+    ],
+};
 
 export default function Edit({
     mustVerifyEmail,
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
-        <App>
-            <Head title="Profile" />
-
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+        <App title="Profile">
+            <PageHeader
+                title={pageHeader.title}
+                breadcrumb={pageHeader.breadcrumb}
+            ></PageHeader>
+            <div>
+                <div className="max-w-7xl mx-auto sm:px-6 space-y-6">
+                    <div className="pb-8 pt-5 border-b border-gray-300">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
@@ -23,13 +34,13 @@ export default function Edit({
                         />
                     </div>
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <div className="py-8 bg-white">
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    {/* <div className="p-4 sm:p-8 bg-white">
                         <DeleteUserForm className="max-w-xl" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </App>

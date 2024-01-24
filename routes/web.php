@@ -73,9 +73,16 @@ Route::middleware('locale')->group(function () {
 
         Route::middleware('role:admin')->group(function () {
             Route::get('dashboard', [DashboardController::class, 'index']);
-            Route::get('reports', [ManageReportController::class, 'index']);
-            Route::get('users', [ManageUserController::class, 'index']);
+
+            Route::prefix('reports')->group(function () {
+                Route::get('sale', [ManageReportController::class, 'index']);
+                Route::get('stock', [ManageReportController::class, 'stock']);
+            });
+
             Route::get('settings', [SettingController::class, 'index']);
+            Route::prefix('admin')->name('admin.')->group(function () {
+                Route::resource('users', ManageUserController::class);
+            });
 
             Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
                 // Categories

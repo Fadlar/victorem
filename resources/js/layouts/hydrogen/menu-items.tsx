@@ -49,22 +49,34 @@ export const menuItems = [
     },
     {
         name: "Reports",
-        href: "/reports",
+        href: "#",
         icon: <PiDownloadDuotone />,
-        permission: "viewDashboard",
+        dropdownItems: [
+            {
+                name: "Sales Report",
+                href: "/reports/sale",
+                badge: "",
+            },
+            {
+                name: "Stock Report",
+                href: "/reports/stock",
+                badge: "",
+            },
+        ],
     },
+
     {
         name: "Users",
-        href: "/users",
+        href: routes.eCommerce.users,
         icon: <PiUsersDuotone />,
         permission: "viewDashboard",
     },
-    {
-        name: "Roles & Permissions",
-        href: routes.rolesPermissions,
-        icon: <PiFolderLockDuotone />,
-        permission: "developer",
-    },
+    // {
+    //     name: "Roles & Permissions",
+    //     href: routes.rolesPermissions,
+    //     icon: <PiFolderLockDuotone />,
+    //     permission: "developer",
+    // },
     // label start
     {
         name: "Pages",
@@ -74,10 +86,10 @@ export const menuItems = [
         href: routes.profile,
         icon: <PiUserCircleDuotone />,
     },
-    {
-        name: "Settings",
-        href: "/settings",
-        icon: <PiGearDuotone />,
-        permission: "viewDashboard",
-    },
+    // {
+    //     name: "Settings",
+    //     href: "/settings",
+    //     icon: <PiGearDuotone />,
+    //     permission: "viewDashboard",
+    // },
 ];

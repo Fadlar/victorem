@@ -64,7 +64,7 @@ export default function EcommerceDashboard() {
 
                 <PromotionalSales className="@4xl:col-start-2 @4xl:row-start-3 @7xl:col-span-4 @7xl:col-start-auto @7xl:row-start-auto" />
 
-                <RecentOrder className="relative @4xl:col-span-2 @7xl:col-span-12" />
+                {/* <RecentOrder className="relative @4xl:col-span-2 @7xl:col-span-12" /> */}
 
                 <RepeatCustomerRate className="@4xl:col-span-2 @7xl:col-span-12 @[90rem]:col-span-8" />
 

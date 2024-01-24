@@ -1,3 +1,4 @@
+import ApplicationLogo from "@/Components/ApplicationLogo";
 import Logo from "@/components/logo";
 import SearchWidget from "@/components/search/search";
 import { useIsMounted } from "@/hooks/use-is-mounted";
@@ -58,7 +59,7 @@ export default function Header() {
                     aria-label="Site Logo"
                     className="me-4 w-9 shrink-0 lg:me-5 xl:hidden"
                 >
-                    <Logo iconOnly={true} />
+                    <ApplicationLogo className="w-10" />
                 </a>
                 <SearchWidget />
             </div>

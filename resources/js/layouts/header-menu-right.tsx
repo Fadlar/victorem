@@ -23,7 +23,8 @@ export default function HeaderMenuRight() {
                 </ActionIcon>
             </MessagesDropdown> */}
             <NotificationDropdown>
-                <ActionIcon
+                <div></div>
+                {/* <ActionIcon
                     aria-label="Notification"
                     variant="text"
                     className="relative h-[34px] w-[34px] shadow backdrop-blur-md dark:bg-gray-100 md:h-9 md:w-9"
@@ -35,7 +36,7 @@ export default function HeaderMenuRight() {
                         enableOutlineRing
                         className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
                     />
-                </ActionIcon>
+                </ActionIcon> */}
             </NotificationDropdown>
             <ProfileMenu />
         </div>

@@ -83,7 +83,7 @@
         Hero Slider
     ------------------------*/
     $(".hero__slider").owlCarousel({
-        loop: true,
+        loop: false,
         margin: 0,
         items: 1,
         dots: false,

@@ -57,4 +57,9 @@ class Product extends Model
     {
         return number_format($value, 0, ',', '.') . '%';
     }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

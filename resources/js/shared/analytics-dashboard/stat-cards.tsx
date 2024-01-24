@@ -121,51 +121,40 @@ const barData = [
 const analyticsStatData = [
     {
         id: "1",
-        title: "Website Traffic",
+        title: "Orders",
         metric: "91.6K",
-        info: "Number of the visitors on the website.",
         increased: true,
         decreased: false,
-        percentage: "+32.40",
         fill: "#015DE1",
         chart: trafficData,
     },
     {
         id: "2",
-        title: "Conversion Rate",
+        title: "Sales",
         metric: "12.56%",
-        info: "Number of the visitors turned into user.",
         increased: false,
         decreased: true,
-        percentage: "-4.40",
         fill: "#048848",
         chart: conventionRateData,
     },
     {
         id: "3",
-        title: "Bounce Rate",
+        title: "Revenue",
         metric: "45.33%",
-        info: "Number of the visitors went without visiting.",
         increased: true,
         decreased: false,
-        percentage: "+32.40",
         fill: "#B92E5D",
-        chart: barData,
-    },
-    {
-        id: "4",
-        title: "Session Duration",
-        metric: "2.30 hrs",
-        info: "Amount of time users used the website.",
-        increased: true,
-        decreased: false,
-        percentage: "+32.40",
-        fill: "#8200E9",
         chart: barData,
     },
 ];
 
-export default function StatCards({ className }: { className?: string }) {
+export default function StatCards({
+    className,
+    data,
+}: {
+    className?: string;
+    data: any;
+}) {
     return (
         <div
             className={cn(
@@ -173,7 +162,7 @@ export default function StatCards({ className }: { className?: string }) {
                 className,
             )}
         >
-            {analyticsStatData.map((stat) => (
+            {data.map((stat: any) => (
                 <MetricCard
                     key={stat.title + stat.id}
                     title={stat.title}
@@ -182,17 +171,11 @@ export default function StatCards({ className }: { className?: string }) {
                     metricClassName="text-2xl mt-1"
                     info={
                         <Text className="mt-4 max-w-[150px] text-sm text-gray-500">
-                            {stat.info}
+                            {/* {stat.info} */}
                         </Text>
                     }
                     chart={
                         <>
-                            <div
-                                style={{ color: stat.fill }}
-                                className="mb-3 text-sm font-medium"
-                            >
-                                {stat.percentage}%
-                            </div>
                             <div className="h-12 w-20 @[16.25rem]:h-16 @[16.25rem]:w-24 @xs:h-20 @xs:w-28">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart
