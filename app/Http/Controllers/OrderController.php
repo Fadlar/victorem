@@ -21,7 +21,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if ($order->status !== OrderStatus::PENDING->value || $order->status !== OrderStatus::PAYMENT->value) {
+        if ($order->status !== OrderStatus::PENDING->value && $order->status !== OrderStatus::PAYMENT->value) {
             return redirect("/order/$order->order_id/invoice");
         }
 
