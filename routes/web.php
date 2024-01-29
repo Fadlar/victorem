@@ -76,7 +76,9 @@ Route::middleware('locale')->group(function () {
 
             Route::prefix('reports')->group(function () {
                 Route::get('sale', [ManageReportController::class, 'index']);
+                Route::get('sale/export', [ManageReportController::class, 'saleExport']);
                 Route::get('stock', [ManageReportController::class, 'stock']);
+                Route::get('stock/export', [ManageReportController::class, 'stockExport']);
             });
 
             Route::get('settings', [SettingController::class, 'index']);

@@ -1,10 +1,12 @@
 import App from "@/Layouts/App";
+import TrashIcon from "@/components/icons/trash";
 import DateCell from "@/components/ui/date-cell";
-import ExportButton from "@/shared/export-button";
 import PageHeader from "@/shared/page-header";
-import { useEffect, useState } from "react";
+import { router } from "@inertiajs/react";
+import { useState } from "react";
+import { PiArrowLineUpBold, PiXBold } from "react-icons/pi";
 import { NumericFormat } from "react-number-format";
-import { Drawer } from "rizzui";
+import { ActionIcon, Button, Drawer, Text, Title } from "rizzui";
 
 const pageHeader = {
     title: `Sales Report`,
@@ -19,24 +21,37 @@ const pageHeader = {
     ],
 };
 
-export default function Report({ products }: any) {
+export default function Report({ products, filter }: any) {
     const [drawerState, setDrawerState] = useState(false);
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({
+        start_at: filter.start_at ?? "",
+        end_at: filter.end_at ?? "",
+    });
 
-    useEffect(() => {
-        if (products.length) {
-            const newData = products.map((product: any) => ({
-                date: product.order.updated_at,
-                name: product.product.name,
-                size: product.size,
-                quantity: product.quantity,
-                total: product.amount,
-            }));
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setData({ ...data, [name]: value });
+    };
 
-            setData(newData);
-        }
-    }, [products]);
+    const clearFilter = () => {
+        setData({
+            start_at: "",
+            end_at: "",
+        });
+    };
+
+    const filterHandler = (e: any) => {
+        e.preventDefault();
+        router.get("/reports/sale", { ...data });
+        setDrawerState(false);
+    };
+
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    const downloadHandler = () => {
+        window.location.href = `/reports/sale/export?start_at=${data.start_at}&end_at=${data.end_at}`;
+    };
 
     return (
         <App title="Sales Report">
@@ -45,26 +60,103 @@ export default function Report({ products }: any) {
                 breadcrumb={pageHeader.breadcrumb}
             >
                 <div className="flex gap-x-3 items-center">
-                    <ExportButton
-                        data={data}
-                        header="DATE,PRODUCT NAME,SIZE,QUANTITY,TOTAL"
-                        fileName="sales-report"
-                    />
-                    {/* <Button type="button" onClick={() => setDrawerState(true)}>
-                        Filter
-                    </Button> */}
+                    <div className="flex gap-x-3 items-center">
+                        <Button
+                            type="button"
+                            onClick={() => setDrawerState(true)}
+                        >
+                            Filter
+                        </Button>
+                        <Button
+                            variant="outline"
+                            onClick={downloadHandler}
+                            className="w-full @lg:w-auto"
+                        >
+                            <PiArrowLineUpBold className="me-1.5 h-[17px] w-[17px]" />
+                            Export
+                        </Button>
+                    </div>
                 </div>
             </PageHeader>
             <Drawer
-                isOpen={drawerState}
                 size="sm"
+                isOpen={drawerState}
                 onClose={() => setDrawerState(false)}
+                overlayClassName="dark:bg-opacity-20 backdrop-blur-md"
+                containerClassName="dark:bg-gray-100"
             >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-                dolorum, quis quidem deserunt hic rerum, quae quaerat voluptas
-                quod laboriosam nihil laudantium explicabo cumque eaque corrupti
-                tenetur, nulla aliquam ut.
+                <div className="flex h-full flex-col p-5">
+                    <div className="-mx-5 mb-6 flex items-center justify-between border-b border-gray-200 px-5 pb-4">
+                        <Title as="h5">Sale Filter</Title>
+                        <ActionIcon
+                            size="sm"
+                            rounded="full"
+                            variant="text"
+                            title={"Close Filter"}
+                            onClick={() => setDrawerState(false)}
+                        >
+                            <PiXBold className="h-4 w-4" />
+                        </ActionIcon>
+                    </div>
+                    <form onSubmit={filterHandler}>
+                        <div className="mb-4">
+                            <Text
+                                as="span"
+                                className="mb-2 mt-2.5 block text-sm"
+                            >
+                                From Date
+                            </Text>
+                            <input
+                                name="start_at"
+                                type="date"
+                                onChange={handleChange}
+                                value={data.start_at}
+                                className="w-full border-gray-300 rounded-md"
+                                max={currentDate}
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Text
+                                as="span"
+                                className="mb-2 mt-2.5 block text-sm"
+                            >
+                                To Date
+                            </Text>
+                            <input
+                                name="end_at"
+                                type="date"
+                                onChange={handleChange}
+                                value={data.end_at}
+                                className="w-full border-gray-300 rounded-md"
+                                max={currentDate}
+                                min={data.start_at}
+                                disabled={!data.start_at}
+                                required={data.start_at ? true : false}
+                            />
+                        </div>
+                        {data.start_at && data.end_at ? (
+                            <Button
+                                type="button"
+                                onClick={clearFilter}
+                                variant="flat"
+                                size="sm"
+                                className="w-full text-gray-700"
+                            >
+                                <TrashIcon className="w-4 h-4" />
+                                <span className="ml-1">Clear</span>
+                            </Button>
+                        ) : null}
+                        <Button
+                            size="lg"
+                            type="submit"
+                            className="mt-5 h-11 w-full text-sm"
+                        >
+                            Show Results
+                        </Button>
+                    </form>
+                </div>
             </Drawer>
+
             <div className="relative overflow-x-auto rounded-lg border border-gray-300">
                 <table className="w-full text-sm text-left text-gray-500">
                     <thead className="text-xs text-gray-500 uppercase bg-gray-100">
@@ -130,6 +222,13 @@ export default function Report({ products }: any) {
                                 </td>
                             </tr>
                         ))}
+                        {!products.length && (
+                            <tr>
+                                <td className="py-4 text-center" colSpan={5}>
+                                    No data.
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
