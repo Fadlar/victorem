@@ -1,5 +1,6 @@
 import LithiumLayout from "@/layouts/lithium/lithium-layout";
 import OrderViewProducts from "@/shared/ecommerce/order/order-products/order-view-products";
+import PrintButton from "@/shared/print-button";
 import { Asset } from "@/shared/roles-permissions/utils";
 import cn from "@/utils/class-names";
 import { Head } from "@inertiajs/react";
@@ -76,7 +77,15 @@ export default function Invoice({ invoice }: any) {
                         <h2 className="text-gray-700 font-lexend">
                             Order #{invoice.order_id}
                         </h2>
-                        <InvoiceTemplate />
+                        {invoice.status === "finish" ? (
+                            <a
+                                href={`/order/${invoice.order_id}/invoice-download`}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                <PrintButton />
+                            </a>
+                        ) : null}
                     </div>
                     <div className="py-5 flex items-center text-gray-800 font-medium border-b">
                         <div className="border-r pr-4">
@@ -344,9 +353,5 @@ const InvoiceTemplate = () => {
         // pdf.output('dataurlnewwindow'); // Tampilkan di jendela baru
     };
 
-    return (
-        <Button type="button" onClick={handleDownload}>
-            Download Invoice (PDF)
-        </Button>
-    );
+    return <Button type="button">Download Invoice (PDF)</Button>;
 };

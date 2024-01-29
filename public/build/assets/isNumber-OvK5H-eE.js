@@ -1,0 +1,1 @@
+import{g as r}from"./app-l73uQ8Cn.js";import{_ as t,i as s}from"./isTypedArray-Ia0lfW4S.js";var a=t,i=s,b="[object Number]";function m(e){return typeof e=="number"||i(e)&&a(e)==b}var o=m;const c=r(o);export{o as a,c as i};

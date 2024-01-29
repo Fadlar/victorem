@@ -3,6 +3,7 @@ import cn from "@/utils/class-names";
 
 import { useIsMounted } from "@/hooks/use-is-mounted";
 import { useWindowScroll } from "@/hooks/use-window-scroll";
+import ApplicationLogo from "@/Components/ApplicationLogo";
 
 export default function Header() {
     const isMounted = useIsMounted();
@@ -20,9 +21,9 @@ export default function Header() {
                 <a
                     aria-label="Site Logo"
                     href={"/"}
-                    className="me-4 hidden w-[155px] shrink-0 text-gray-900 lg:me-5 xl:block"
+                    className="me-4 hidden w-14 shrink-0 text-gray-900 lg:me-5 xl:block"
                 >
-                    <Logo className="max-w-[155px]" />
+                    <ApplicationLogo />
                 </a>
             </div>
             <div className="flex w-full items-center gap-5 xl:w-auto 3xl:gap-6">
@@ -32,7 +33,7 @@ export default function Header() {
                         href={"/"}
                         className="me-4 w-9 shrink-0 text-gray-900 lg:me-5 xl:hidden"
                     >
-                        <Logo iconOnly={true} />
+                        <ApplicationLogo iconOnly={true} />
                     </a>
                 </div>
             </div>

@@ -174,4 +174,15 @@ class OrderController extends Controller
             'invoice' => $order->load('user', 'payment', 'orderItems', 'orderItems.product', 'orderItems.product.images')
         ]);
     }
+
+    public function invoiceDownload(Order $order)
+    {
+        if ($order->status === OrderStatus::PENDING->value) {
+            return redirect('/checkout/' . $order->order_id);
+        }
+
+        return view('print', [
+            'invoice' => $order->load('user', 'payment', 'orderItems', 'orderItems.product', 'orderItems.product.images')
+        ]);
+    }
 }

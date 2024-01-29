@@ -2,12 +2,13 @@ import App from "@/Layouts/App";
 import { routes } from "@/config/routes";
 import DeletePopover from "@/shared/delete-popover";
 import PageHeader from "@/shared/page-header";
+import PrintButton from "@/shared/print-button";
+import notification from "@/utils/notification";
+import { router, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { PiXBold } from "react-icons/pi";
 import { ActionIcon, Button, Input, Modal, Textarea, Title } from "rizzui";
 import OrderView from "./_shared/OrderView";
-import { router, useForm } from "@inertiajs/react";
-import notification from "@/utils/notification";
 
 const pageHeader = {
     title: `Detail Order`,
@@ -66,6 +67,16 @@ export default function ShowOrder({ order }: any) {
                     <Button type="button" onClick={() => setModalState(true)}>
                         Update Status
                     </Button>
+                    {order.status === "finish" ? (
+                        <a
+                            href={`/order/${order.order_id}/invoice-download`}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >
+                            <PrintButton />
+                        </a>
+                    ) : null}
+
                     <DeletePopover.Button
                         title={`Delete the order`}
                         description={`Are you sure you want to delete this #${order.order_id} order?`}

@@ -69,9 +69,10 @@ Route::middleware('locale')->group(function () {
         Route::prefix('order')->group(function () {
             Route::post('{order}', [OrderController::class, 'checkout2']);
             Route::get('{order:order_id}/invoice', [OrderController::class, 'invoice']);
+            Route::get('{order:order_id}/invoice-download', [OrderController::class, 'invoiceDownload']);
         });
 
-        Route::middleware('role:admin')->group(function () {
+        Route::middleware('role:admin|owner')->group(function () {
             Route::get('dashboard', [DashboardController::class, 'index']);
 
             Route::prefix('reports')->group(function () {

@@ -2,8 +2,6 @@ import { routes } from "@/config/routes";
 import {
     PiChartBarDuotone,
     PiDownloadDuotone,
-    PiFolderLockDuotone,
-    PiGearDuotone,
     PiShoppingBagDuotone,
     PiShoppingCartDuotone,
     PiTagDuotone,
