@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Input } from "@/components/ui/input";
 import { Title } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
@@ -11,22 +11,41 @@ import {
     PiXBold,
 } from "react-icons/pi";
 import cn from "@/utils/class-names";
-import { pageLinks } from "./page-links.data";
+import { pageLinks, pageLinksOwner } from "./page-links.data";
 import { t } from "@/utils/lang";
+import { PageProps } from "@/types";
 
 export default function SearchList({ onClose }: { onClose?: () => void }) {
     const inputRef = useRef(null);
     const [searchText, setSearchText] = useState("");
+    const { auth } = usePage<PageProps>().props;
 
-    let menuItemsFiltered = pageLinks;
+    const isAdmin = auth.user.roles.some((role) => role.name === "admin");
+    const isOwner = auth.user.roles.some((role) => role.name === "owner");
+
+    let menuItemsFiltered = isAdmin ? pageLinks : pageLinksOwner;
     if (searchText.length > 0) {
-        menuItemsFiltered = pageLinks.filter((item: any) => {
-            const label = item.name;
-            return (
-                label.match(searchText.toLowerCase()) ||
-                (label.toLowerCase().match(searchText.toLowerCase()) && label)
-            );
-        });
+        if (isAdmin) {
+            menuItemsFiltered = pageLinks.filter((item: any) => {
+                const label = item.name;
+                return (
+                    label.match(searchText.toLowerCase()) ||
+                    (label.toLowerCase().match(searchText.toLowerCase()) &&
+                        label)
+                );
+            });
+        }
+
+        if (isOwner) {
+            menuItemsFiltered = pageLinksOwner.filter((item: any) => {
+                const label = item.name;
+                return (
+                    label.match(searchText.toLowerCase()) ||
+                    (label.toLowerCase().match(searchText.toLowerCase()) &&
+                        label)
+                );
+            });
+        }
     }
 
     useEffect(() => {

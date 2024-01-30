@@ -1,5 +1,4 @@
 import { routes } from "@/config/routes";
-import { DUMMY_ID } from "@/config/constants";
 
 // Note: do not add href in the label object, it is rendering as label
 export const pageLinks = [
@@ -34,8 +33,13 @@ export const pageLinks = [
         permission: "viewDashboard",
     },
     {
-        name: "Reports",
-        href: "/reports",
+        name: "Sale Reports",
+        href: "/reports/sale",
+        permission: "viewDashboard",
+    },
+    {
+        name: "Stock Reports",
+        href: "/reports/stock",
         permission: "viewDashboard",
     },
     {
@@ -51,9 +55,30 @@ export const pageLinks = [
         name: "Profile",
         href: routes.profile,
     },
+    // {
+    //     name: "Settings",
+    //     href: "/settings",
+    //     permission: "viewDashboard",
+    // },
+];
+
+export const pageLinksOwner = [
+    // label start
     {
-        name: "Settings",
-        href: "/settings",
+        name: "Menu",
+    },
+    {
+        name: "Dashboard",
+        href: "/dashboard",
         permission: "viewDashboard",
+    },
+    {
+        name: "Sale Reports",
+        href: "/reports/sale",
+        permission: "viewDashboard",
+    },
+    {
+        name: "Profile",
+        href: routes.profile,
     },
 ];

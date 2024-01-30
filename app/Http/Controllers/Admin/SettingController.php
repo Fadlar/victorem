@@ -11,4 +11,12 @@ class SettingController extends Controller
     {
         return inertia('Admin/Setting/Index');
     }
+
+    public function store(Request $request)
+    {
+        return $request->all();
+        // foreach($request->all() as ) {
+
+        // }
+    }
 }

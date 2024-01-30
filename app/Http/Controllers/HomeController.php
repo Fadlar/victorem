@@ -15,9 +15,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function about()
+    public function gallery()
     {
-        return view('home.about');
+        return view('home.gallery');
     }
 
     public function contact()

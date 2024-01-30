@@ -57,7 +57,7 @@
                         <ul>
                             <li class="{{ request()->path() == '/' ? 'active' : '' }}"><a href="/">Home</a></li>
                             <li class="{{ request()->path() == 'products' ? 'active' : '' }}"><a href="/products">Shop</a></li>
-                            <li class="{{ request()->path() == 'about' ? 'active' : '' }}"><a href="/about">About</a></li>
+                            <li class="{{ request()->path() == 'gallery' ? 'active' : '' }}"><a href="/gallery">Gallery</a></li>
                             <li class="{{ request()->path() == 'contact' ? 'active' : '' }}"><a href="/contact">Contact</a></li>
                             <li>
                                 <a href="#">More</a>

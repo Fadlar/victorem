@@ -11,32 +11,32 @@ import { useBerylliumSidebars } from "@/layouts/beryllium/beryllium-utils";
 
 const menuItems = [
     {
-        label: "My Details",
-        value: "/forms/profile-settings",
+        label: "Generals",
+        value: "/settings",
     },
     {
-        label: "Profile",
-        value: "/forms/profile-settings/profile",
+        label: "Address",
+        value: "/settings/profile",
     },
     {
         label: "Password",
-        value: "/forms/profile-settings/password",
+        value: "/settings/password",
     },
     {
         label: "Team",
-        value: "/forms/profile-settings/team",
+        value: "/settings/team",
     },
     {
         label: "Billing",
-        value: "/forms/profile-settings/billing",
+        value: "/settings/billing",
     },
     {
         label: "Notifications",
-        value: "/forms/profile-settings/notification",
+        value: "/settings/notification",
     },
     {
         label: "Integrations",
-        value: "/forms/profile-settings/integration",
+        value: "/settings/integration",
     },
 ];
 
