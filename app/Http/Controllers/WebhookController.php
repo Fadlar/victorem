@@ -67,7 +67,6 @@ class WebhookController extends Controller
         // PaymentLog::create($logData);
 
         // $payment->save();
-        // $payment = Payment::find(1);
         // if ($payment->status === 'success') {
         //     $payment->order()->update([
         //         'status' => \App\Enums\OrderStatus::PAYMENT_SUCCESS
@@ -75,7 +74,7 @@ class WebhookController extends Controller
 
         // $orderItems = OrderItem::where('order_id', $payment->order->id)->with('product')->get();
         $orderItems = OrderItem::where('order_id', 8)->with('product', 'product.sizes')->get();
-        return $orderItems;
+        // return $orderItems;
 
         foreach ($orderItems as $orderItem) {
             $size = $orderItem->product->sizes()->where('name', $orderItem->size)->firstOr(fn () => false);
