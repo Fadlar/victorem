@@ -74,7 +74,7 @@ class WebhookController extends Controller
         //     ]);
 
         // $orderItems = OrderItem::where('order_id', $payment->order->id)->with('product')->get();
-        $orderItems = OrderItem::where('order_id', 4)->with('product')->get();
+        $orderItems = OrderItem::where('order_id', 4)->with('product', 'product.sizes')->get();
 
         foreach ($orderItems as $orderItem) {
             $size = $orderItem->product->sizes()->where('name', $orderItem->size)->firstOr(fn () => false);
