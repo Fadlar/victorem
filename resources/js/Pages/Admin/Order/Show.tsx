@@ -43,7 +43,10 @@ export default function ShowOrder({ order }: any) {
     };
 
     const onDeleteItem = () => {
-        router.delete(routes.eCommerce.orderDetails(order.id));
+        router.delete(routes.eCommerce.orderDetails(order.id), {
+            onSuccess: () =>
+                router.visit(routes.eCommerce.orders, { only: ["orders"] }),
+        });
     };
 
     const submitHandler = (e: any) => {

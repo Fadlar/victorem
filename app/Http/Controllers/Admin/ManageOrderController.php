@@ -38,6 +38,6 @@ class ManageOrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
-        return back();
+        return redirect()->route('ecommerce.orders.index');
     }
 }
