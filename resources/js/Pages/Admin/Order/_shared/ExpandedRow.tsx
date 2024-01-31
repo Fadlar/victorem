@@ -43,6 +43,9 @@ export default function ExpandedOrderRow({ record }: any) {
                                     decimalScale={2}
                                 />
                             </Text>
+                            <Text className="text-xs text-gray-500">
+                                Size: {order.size}
+                            </Text>
                         </header>
                     </div>
                     <div className="flex w-full max-w-xs items-center justify-between gap-4">
