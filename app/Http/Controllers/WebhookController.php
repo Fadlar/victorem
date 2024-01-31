@@ -78,7 +78,7 @@ class WebhookController extends Controller
             foreach ($orderItems as $orderItem) {
                 $size = $orderItem->product->sizes()->where('name', $orderItem->size)->firstOr(fn () => false);
                 if ($size) {
-                    if ($size->quantity !== 0 || $size->quantity !== null) {
+                    if ($size->stock != 0 || $size->stock != null) {
                         $size->update([
                             'stock' => $size->stock - $orderItem->quantity
                         ]);
