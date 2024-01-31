@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Size;
 use Carbon\Carbon;
@@ -17,34 +18,23 @@ class OrderController extends Controller
         $orders = $request->user()->orders->load('orderItems');
 
         foreach ($orders as $order) {
-            if ($order == 'pending') {
-                if ($order->orderItems != null) {
-                    foreach ($order->orderItems as $item) {
-                        $size = Size::where('product_id', $item->product_id)->where('name', $item->size)->first();
-
-                        if ($size) {
-                            if ($item->quantity > $size->stock) {
-                                $item->delete();
-                            }
-                        } else {
-                            $item->delete();
-                        }
-
-                        if ($item->product_id == null) {
-                            $item->delete();
-                        }
-                    }
+            if ($order->status == 'pending' || $order->status == 'payment') {
+                if ($order->orderItems->count() <= 0) {
+                    $order->delete();
                 }
-            }
-
-            if ($order->orderItems->count() == 0) {
-                $order->delete();
             }
 
             if ($order->status == 'payment') {
                 if ($order->updated_at->addDay(1) <= now()) {
                     $order->delete();
                 }
+            }
+        }
+
+        $orderItems = OrderItem::with('order')->where('product_id', null)->get();
+        foreach ($orderItems as $item) {
+            if ($item->order->status == 'pending' || $item->order->status == 'payment') {
+                $item->delete();
             }
         }
 
