@@ -32,7 +32,7 @@ class ManageReportController extends Controller
                 $query->select('id', 'created_at', 'updated_at', 'status');
             }])
             ->select('id', 'size', 'quantity', 'price', 'amount', 'product_id', 'order_id', 'updated_at')
-            ->get();
+            ->latest()->get();
 
         return inertia('Admin/Report/Index', [
             'products' => $products,
@@ -56,7 +56,7 @@ class ManageReportController extends Controller
                 $query->select('id', 'created_at', 'updated_at', 'status');
             }])
             ->select('id', 'size', 'quantity', 'price', 'amount', 'product_id', 'order_id', 'updated_at')
-            ->get();
+            ->latest()->get();
 
         $productsNew = [];
         foreach ($products as $product) {
@@ -82,7 +82,7 @@ class ManageReportController extends Controller
         }])->when($request->size, fn ($q, $key) => $q->where('name', $key))
             ->when($request->start_at, fn ($q) => $q->whereDate('sizes.updated_at', '>=', $startDate))
             ->when($request->end_at, fn ($q) => $q->whereDate('sizes.updated_at', '<=', $endDate))
-            ->get();
+            ->latest()->get();
 
         return inertia('Admin/Report/Stock', [
             'sizes' => $sizes,
@@ -99,7 +99,7 @@ class ManageReportController extends Controller
         }])->when($request->size, fn ($q, $key) => $q->where('name', $key))
             ->when($request->start_at, fn ($q) => $q->whereDate('sizes.updated_at', '>=', $startDate))
             ->when($request->end_at, fn ($q) => $q->whereDate('sizes.updated_at', '<=', $endDate))
-            ->get();
+            ->latest()->get();
 
         $sizesNew = [];
         foreach ($sizes as $item) {

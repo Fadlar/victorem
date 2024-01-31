@@ -11,7 +11,7 @@ class ManageUserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::where('id', '!=', $request->user()->id)->get();
+        $users = User::where('id', '!=', $request->user()->id)->latest()->get();
         return inertia('Admin/User/Index', [
             'users' => $users
         ]);

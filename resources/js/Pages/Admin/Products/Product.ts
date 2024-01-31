@@ -28,4 +28,6 @@ export interface Product {
     categories: Category[];
     sizes: Size[];
     status: string;
+    created_at: any;
+    updated_at: any;
 }

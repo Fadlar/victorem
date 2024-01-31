@@ -11,7 +11,7 @@ class ManageOrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('status', '!=', OrderStatus::PENDING)->with(['user', 'orderItems', 'orderItems.product'])->get();
+        $orders = Order::where('status', '!=', OrderStatus::PENDING)->with(['user', 'orderItems', 'orderItems.product'])->latest()->get();
         return inertia('Admin/Order/Index', [
             'orders' => $orders
         ]);

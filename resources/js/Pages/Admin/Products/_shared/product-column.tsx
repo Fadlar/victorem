@@ -13,6 +13,7 @@ import { PiMinus } from "react-icons/pi";
 import { NumericFormat } from "react-number-format";
 import { Avatar, Switch } from "rizzui";
 import { Product } from "../Product";
+import DateCell from "@/components/ui/date-cell";
 
 type Columns = {
     sortConfig?: any;
@@ -169,6 +170,14 @@ export const productColumn = ({
             };
             return <Switch checked={isChecked} onChange={handleStatus} />;
         },
+    },
+    {
+        title: <HeaderCell title={t("Modified")} />,
+        onHeaderCell: () => onHeaderCellClick("modified"),
+        dataIndex: "Modified",
+        key: "modified",
+        width: 5,
+        render: (_: any, row: Product) => <DateCell date={row.updated_at} />,
     },
     {
         title: <></>,
