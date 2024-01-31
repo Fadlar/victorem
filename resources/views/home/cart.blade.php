@@ -117,7 +117,7 @@
                                                 <td class="quantity__item">
                                                     <div class="quantity d-flex justify-content-center">
                                                         <div class="pro-qty-2">
-                                                            <input type="number" name="cart_updates[{{ $loop->index }}][new_quantity]" value="{{ $cart->quantity }}" min="1" required>
+                                                            <input type="number" name="cart_updates[{{ $loop->index }}][new_quantity]" value="{{ $cart->quantity }}" min="1" required={{ $cart->product->sizes->where('name', $cart->size)->first()['stock'] > 0 }}>
                                                         </div>
                                                     </div>
                                                     @error("cart_updates.{$loop->index}.new_quantity")

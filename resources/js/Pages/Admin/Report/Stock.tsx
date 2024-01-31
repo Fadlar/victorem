@@ -115,9 +115,6 @@ export default function Stock({ sizes, filter }: any) {
                                 <option value="m">M (Medium)</option>
                                 <option value="l">L (Large)</option>
                                 <option value="xl">XL (Extra Large)</option>
-                                <option value="xxl">
-                                    XXL (Extra Extra Large)
-                                </option>
                             </select>
                         </div>
                         <div className="mb-4">

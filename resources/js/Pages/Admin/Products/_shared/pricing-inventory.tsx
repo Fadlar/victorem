@@ -30,10 +30,6 @@ const sizes = [
         name: "Extra Large",
         value: "xl",
     },
-    {
-        name: "Extra Extra Large",
-        value: "xxl",
-    },
 ];
 
 export default function PricingInventory({
