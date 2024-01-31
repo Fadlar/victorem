@@ -44,7 +44,8 @@ export default function ExpandedOrderRow({ record }: any) {
                                 />
                             </Text>
                             <Text className="text-xs text-gray-500">
-                                Size: {order.size}
+                                Size:{" "}
+                                <span className="uppercase">{order.size}</span>
                             </Text>
                         </header>
                     </div>

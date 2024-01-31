@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Size;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -14,6 +15,39 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = $request->user()->orders->load('orderItems');
+
+        foreach ($orders as $order) {
+            if ($order == 'pending') {
+                if ($order->orderItems != null) {
+                    foreach ($order->orderItems as $item) {
+                        $size = Size::where('product_id', $item->product_id)->where('name', $item->size)->first();
+
+                        if ($size) {
+                            if ($item->quantity > $size->stock) {
+                                $item->delete();
+                            }
+                        } else {
+                            $item->delete();
+                        }
+
+                        if ($item->product_id == null) {
+                            $item->delete();
+                        }
+                    }
+                }
+            }
+
+            if ($order->orderItems->count() == 0) {
+                $order->delete();
+            }
+
+            if ($order->status == 'payment') {
+                if ($order->updated_at->addDay(1) <= now()) {
+                    $order->delete();
+                }
+            }
+        }
+
         return view('home.order', [
             'orders' => $orders
         ]);

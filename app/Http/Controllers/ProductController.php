@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         return inertia('Admin/Products/Index', [
-            'products' => Product::with(['user', 'images', 'categories', 'sizes'])->orderBy('updated_at', 'asc')->get()
+            'products' => Product::with(['user', 'images', 'categories', 'sizes'])->orderBy('updated_at', 'desc')->get()
         ]);
     }
 

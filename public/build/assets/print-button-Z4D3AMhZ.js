@@ -1,1 +1,0 @@
-import{j as r}from"./app-wqQKENHS.js";import{m as o}from"./index.esm-2Lz0kP3W.js";import{V as i}from"./index-eZDLojFE.js";function a(){function t(){console.log("write print logic")}return r.jsxs(i,{onClick:()=>t(),variant:"outline",className:"w-full @lg:w-auto",children:[r.jsx(o,{className:"me-1.5 h-[17px] w-[17px]"}),"Print"]})}export{a as P};
