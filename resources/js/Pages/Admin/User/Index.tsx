@@ -22,9 +22,9 @@ export default function User({ users }: any) {
                 title={pageHeader.title}
                 breadcrumb={pageHeader.breadcrumb}
             >
-                <Link href={routes.eCommerce.createUser}>
+                {/* <Link href={routes.eCommerce.createUser}>
                     <Button>Add User</Button>
-                </Link>
+                </Link> */}
             </PageHeader>
             <UsersTable data={users} />
         </App>
