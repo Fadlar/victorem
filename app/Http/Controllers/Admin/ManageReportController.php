@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -112,5 +113,23 @@ class ManageReportController extends Controller
         }
 
         return Excel::download(new StockExport(collect($sizesNew)), 'stock-export.xlsx');
+    }
+
+    public function user(Request $request)
+    {
+        $startDate = $request->start_at ? Carbon::create($request->start_at) : '';
+        $endDate = $request->end_date ? Carbon::create($request->end_at) : '';
+
+        $users = User::when($startDate, fn ($q) => $q->whereDate('created_at', '>=', $startDate))->when($endDate, fn ($q) => $q->whereDate('created_at', '<=', $endDate))->get();
+        return;
+
+        return inertia('Admin/Report/User', [
+            'users' => $users
+        ]);
+    }
+
+    public function userExport()
+    {
+        // 
     }
 }

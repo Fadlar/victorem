@@ -51,6 +51,11 @@ export const menuItems = [
         href: "#",
         icon: <PiDownloadDuotone />,
         dropdownItems: [
+            // {
+            //     name: "User Report",
+            //     href: "/reports/user",
+            //     badge: "",
+            // },
             {
                 name: "Sales Report",
                 href: "/reports/sale",

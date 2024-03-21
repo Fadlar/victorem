@@ -45,9 +45,9 @@ class LoginRequest extends FormRequest
         $credentials = $this->only('email', 'password');
 
         // Attempt to authenticate by email
-        if (!Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $this->boolean('remember'))) {
+        if (!Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'status' => 'active'], $this->boolean('remember'))) {
             // If authentication by email fails, attempt by username
-            if (!Auth::attempt(['username' => $credentials['email'], 'password' => $credentials['password']], $this->boolean('remember'))) {
+            if (!Auth::attempt(['username' => $credentials['email'], 'password' => $credentials['password'], 'status' => 'active'], $this->boolean('remember'))) {
                 // If both email and username authentication fail, throw an exception
                 RateLimiter::hit($this->throttleKey());
 
