@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,37 +27,41 @@ class ProfileController extends Controller
             ]);
         }
 
-        return view('profile.index');
+        return view('profile.index', [
+            'user' => $request->user()
+        ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request)
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        // $request->user()->fill($request->validated());
 
-        $request->validate([
-            'avatar' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048']
-        ]);
+        // $request->validate([
+        //     'avatar' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048']
+        // ]);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        if ($request->file('avatar')) {
-            if ($request->user()->userDetail->avatar !== null) {
-                Storage::delete($request->user()->userDetail->avatar);
-            }
+        // if ($request->file('avatar')) {
+        //     if ($request->user()->userDetail->avatar !== null) {
+        //         Storage::delete($request->user()->userDetail->avatar);
+        //     }
 
-            $avatar = $request->file('avatar');
-            $avatar = $avatar->store('user-avatar', 'public');
-            $request->user()->userDetail()->updateOrCreate([
-                'user_id' => $request->user()->id
-            ], [
-                'avatar' => $avatar
-            ]);
-        }
+        //     $avatar = $request->file('avatar');
+        //     $avatar = $avatar->store('user-avatar', 'public');
+        //     $request->user()->userDetail()->updateOrCreate([
+        //         'user_id' => $request->user()->id
+        //     ], [
+        //         'avatar' => $avatar
+        //     ]);
+        // }
+
+        $request->user()->update($request->all());
 
         $request->user()->userDetail()->updateOrCreate(
             [

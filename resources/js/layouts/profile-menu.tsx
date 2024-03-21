@@ -54,7 +54,7 @@ function DropdownMenu() {
                     variant="text"
                     onClick={() => signOut()}
                 >
-                    {t("Sign Out")}
+                    {t("Logout")}
                 </Button>
             </div>
         </div>

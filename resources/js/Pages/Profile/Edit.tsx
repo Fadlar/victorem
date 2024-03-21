@@ -20,10 +20,10 @@ export default function Edit({
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
         <App title="Profile">
-            <PageHeader
+            {/* <PageHeader
                 title={pageHeader.title}
                 breadcrumb={pageHeader.breadcrumb}
-            ></PageHeader>
+            ></PageHeader> */}
             <div>
                 <div className="max-w-7xl mx-auto sm:px-6 space-y-6">
                     <div className="pb-8 pt-5 border-b border-gray-300">

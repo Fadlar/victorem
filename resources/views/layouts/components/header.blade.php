@@ -1,5 +1,5 @@
     <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
+        {{-- <div class="offcanvas__option">
             <div class="offcanvas__links">
                 @auth
                     <a href="/profile">Account</a>
@@ -8,7 +8,7 @@
                     <a href="/register">Register</a>
                 @endauth
             </div>
-        </div>
+        </div> --}}
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="{{ asset('assets/img/icon/search.png') }}" alt=""></a>
             <a href="/cart"><img src="{{ asset('assets/img/icon/cart.png') }}" alt=""> <span>0</span></a>
@@ -34,7 +34,30 @@
                         <div class="header__top__right">
                             <div class="header__top__links">
                                 @auth
-                                    <a href="/profile">Account</a>
+                                    <div class="header__menu" style="color: white; padding: 0">
+                                        <ul>
+                                            <li>
+                                                {{ auth()->user()->name }}
+                                                <ul class="dropdown">
+                                                    @role('admin|owner')
+                                                        <li><a href="/dashboard">Dashboard</a></li>
+                                                    @endrole
+                                                    <li>
+                                                        <a href="/profile">Account</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/orders">Orders</a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="/logout" method="POST">
+                                                            @csrf
+                                                            <button type="submit" href="/">Logout</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 @else
                                     <a href="/login">Login</a>
                                     <a href="/register">Register</a>
@@ -59,28 +82,24 @@
                             <li class="{{ request()->path() == 'products' ? 'active' : '' }}"><a href="/products">Shop</a></li>
                             <li class="{{ request()->path() == 'gallery' ? 'active' : '' }}"><a href="/gallery">Gallery</a></li>
                             <li class="{{ request()->path() == 'contact' ? 'active' : '' }}"><a href="/contact">Contact</a></li>
-                            <li>
-                                <a href="#">More</a>
-                                <ul class="dropdown">
-                                    @role('admin|owner')
-                                        <li><a href="/dashboard">Dashboard</a></li>
-                                        <li><a href="/profile">Profile</a></li>
-                                    @endrole
-                                    <li><a href="/orders">Orders</a></li>
-                                    @auth
-
+                            @auth
+                                <li class="hide-menu">
+                                    <a href="#">{{ auth()->user()->name }}</a>
+                                    <ul class="dropdown">
+                                        @role('admin|owner')
+                                            <li><a href="/dashboard">Dashboard</a></li>
+                                        @endrole
+                                        <li><a href="/profile">Account</a></li>
+                                        <li><a href="/orders">Orders</a></li>
                                         <li>
                                             <form action="/logout" method="POST">
                                                 @csrf
-                                                <button type="submit" href="/">Logout</button>
+                                                <button type="submit">Logout</button>
                                             </form>
                                         </li>
-                                    @else
-                                        <li><a href="/login">Login</a></li>
-                                        <li><a href="/register">Register</a></li>
-                                    @endauth
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
+                            @endauth
                         </ul>
                     </nav>
                 </div>

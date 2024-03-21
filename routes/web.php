@@ -16,7 +16,6 @@ use App\Http\Controllers\RajaongkirController;
 use App\Http\Controllers\Web\ProductWebController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::post('midtrans-webhook', [WebhookController::class, 'index']);
 
@@ -35,7 +34,7 @@ Route::middleware('locale')->group(function () {
     Route::get('gallery', [HomeController::class, 'gallery']);
     Route::get('contact', [HomeController::class, 'contact']);
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('location')->group(function () {
             Route::get('province', [RajaongkirController::class, 'province']);
             Route::get('city/{province_id}', [RajaongkirController::class, 'city']);

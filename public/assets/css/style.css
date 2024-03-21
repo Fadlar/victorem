@@ -110,6 +110,10 @@ ol {
   Helper CSS
 -----------------------*/
 
+.hide-menu {
+    display: none !important;
+}
+
 .section-title {
     margin-bottom: 45px;
     text-align: center;
@@ -3534,6 +3538,10 @@ ol {
 /* Wide Mobile = 480px */
 
 @media only screen and (max-width: 767px) {
+    .hide-menu {
+        display: inline-block !important;
+    }
+
     .canvas__open {
         display: block;
         font-size: 22px;
@@ -3606,6 +3614,15 @@ ol {
         color: #111111;
         font-weight: 600;
     }
+    .slicknav_nav button {
+        padding: 7px 0;
+        margin: 0;
+        color: #111111;
+        font-weight: 600;
+        background-color: #fff;
+        border: none;
+    }
+
     .slicknav_nav .slicknav_arrow {
         color: #111111;
     }
@@ -3619,6 +3636,12 @@ ol {
         background: transparent;
         color: #111111;
     }
+    .slicknav_nav button:hover {
+        border-radius: 0;
+        background: transparent;
+        color: #111111;
+    }
+
     .slicknav_nav {
         display: block !important;
     }

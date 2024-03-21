@@ -65,7 +65,7 @@ export const getColumns = ({
         title: <HeaderCell title="Name" />,
         dataIndex: "name",
         key: "name",
-        width: 300,
+        width: 200,
         hidden: "customer",
         render: (name: string, row: any) => (
             <TableAvatar
@@ -73,6 +73,24 @@ export const getColumns = ({
                 name={name}
                 description={row.email.toLowerCase()}
             />
+        ),
+    },
+    {
+        title: <HeaderCell title="Phone Number" />,
+        dataIndex: "phone_number",
+        key: "phone_number",
+        width: 140,
+        render: (_: any, row: any) => (
+            <div>{row.user_detail?.phone_number ?? "-"}</div>
+        ),
+    },
+    {
+        title: <HeaderCell title="Address" />,
+        dataIndex: "address",
+        key: "address",
+        width: 140,
+        render: (_: any, row: any) => (
+            <div>{row.user_detail?.address ?? "-"}</div>
         ),
     },
     {
@@ -94,31 +112,31 @@ export const getColumns = ({
             <DateCell date={row.created_at} />
         ),
     },
-    {
-        title: (
-            <HeaderCell
-                title="Email Verified"
-                sortable
-                ascending={
-                    sortConfig?.direction === "asc" &&
-                    sortConfig?.key === "email_verified_at"
-                }
-            />
-        ),
-        onHeaderCell: () => onHeaderCellClick("email_verified_at"),
-        dataIndex: "Email Verified",
-        key: "email_verified_at",
-        width: 200,
-        render: (_: any, row: { email_verified_at: Date }) => (
-            <>
-                {row.email_verified_at !== null ? (
-                    <DateCell date={row.email_verified_at} />
-                ) : (
-                    "-"
-                )}
-            </>
-        ),
-    },
+    // {
+    //     title: (
+    //         <HeaderCell
+    //             title="Email Verified"
+    //             sortable
+    //             ascending={
+    //                 sortConfig?.direction === "asc" &&
+    //                 sortConfig?.key === "email_verified_at"
+    //             }
+    //         />
+    //     ),
+    //     onHeaderCell: () => onHeaderCellClick("email_verified_at"),
+    //     dataIndex: "Email Verified",
+    //     key: "email_verified_at",
+    //     width: 200,
+    //     render: (_: any, row: { email_verified_at: Date }) => (
+    //         <>
+    //             {row.email_verified_at !== null ? (
+    //                 <DateCell date={row.email_verified_at} />
+    //             ) : (
+    //                 "-"
+    //             )}
+    //         </>
+    //     ),
+    // },
     {
         title: <HeaderCell title="Status" />,
         dataIndex: "status",
