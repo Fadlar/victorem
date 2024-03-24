@@ -38,11 +38,6 @@ export const productColumn = ({
         width: 150,
         render: (icon: any, row: any) => (
             <div className="flex gap-x-2 items-center">
-                <Avatar
-                    src={Asset(row.images[0].url)}
-                    name={row.name}
-                    className="rounded-md"
-                />
                 <div>
                     <Title
                         as="h6"
