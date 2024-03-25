@@ -1,31 +1,39 @@
 @extends('layouts.app')
+@section('styles')
+    <style>
+        .lazy-bg {
+            background-image: none;
+            /* Hapus gambar latar belakang secara default */
+        }
+
+        /* .lazy-bg.loaded {
+                    background-image: none;
+                } */
+    </style>
+@endsection
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyBgImages = document.querySelectorAll(".lazy-bg");
+
+            lazyBgImages.forEach(function(img) {
+                var bgImage = new Image();
+                bgImage.src = img.getAttribute("data-bg");
+
+                bgImage.onload = function() {
+                    img.style.backgroundImage = "url('" + bgImage.src + "')";
+                    img.classList.add("loaded");
+                };
+            });
+        });
+    </script>
+@endpush
 @section('content')
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="hero__slider owl-carousel">
             <div class="hero__items set-bg" data-setbg="{{ asset('victorem/banner.jpg') }}"></div>
             <div class="hero__items set-bg" data-setbg="{{ asset('victorem/banner-2.jpg') }}"></div>
-            {{-- <div class="hero__items set-bg" data-setbg="{{ asset('assets/img/hero/hero-2.jpg') }}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
-                            <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                    commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </section>
     <!-- Hero Section End -->
@@ -44,7 +52,7 @@
                 @forelse ($products as $product)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                         <div class="product__item {{ !$product->sizes->sum('stock') ? 'sale' : '' }}">
-                            <div class="product__item__pic set-bg" data-setbg="{{ '/storage/' . $product->images[0]['url'] }}">
+                            <div class="product__item__pic set-bg lazy-bg" data-setbg="{{ '/storage/' . $product->images[0]['url'] }}">
                                 @if (!$product->sizes->sum('stock'))
                                     <span class="label">Sold out</span>
                                 @else
