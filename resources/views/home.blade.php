@@ -45,6 +45,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                         <div class="product__item {{ !$product->sizes->sum('stock') ? 'sale' : '' }}">
                             <div class="product__item__pic set-bg" data-setbg="{{ '/storage/' . $product->images[0]['url'] }}">
+                                <img src="{{ '/storage/' . $product->images[0]['url'] }}" alt="{{ $product->name }}" loading="lazy">
                                 @if (!$product->sizes->sum('stock'))
                                     <span class="label">Sold out</span>
                                 @else
