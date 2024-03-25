@@ -7,24 +7,33 @@
         }
 
         /* .lazy-bg.loaded {
-                            background-image: none;
-                        } */
+                                                                        background-image: none;
+                                                                    } */
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-Hb0JfW8svOHkzqOLJ6/sA7ZwjkQ1QyBnyfB3DgC+LJe4Anl17Dskx7ZG8HS++cXt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/plugins/unveilhooks/ls.unveilhooks.min.js" integrity="sha384-D6Ap0oST3zzQz6bV40g7qWsQONbpbV44mX8c/ghHtV3G18vvC9D6dHs6SwAptEqV" crossorigin="anonymous"></script>
+    <script>
+        window.lazySizesConfig = window.lazySizesConfig || {};
+        window.lazySizesConfig.loadMode = 1; // Menggunakan loadMode 1 untuk lazyload
+        window.lazySizesConfig.throttleDelay = 100; // Menunda hingga 100ms sebelum memuat gambar
+        window.lazySizesConfig.init = false; // Inisialisasi ditangguhkan untuk memungkinkan konfigurasi kustom
+        window.lazySizesConfig.plugins.unveilhooks = true; // Mengaktifkan unveilhooks
+
+        // Inisialisasi setelah konfigurasi selesai
+        window.addEventListener('DOMContentLoaded', function() {
+            lazySizes.init(); // Inisialisasi Lazysizes
+        });
+    </script>
 @endsection
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var lazyBgImages = document.querySelectorAll(".lazy-bg");
-
-            lazyBgImages.forEach(function(img) {
-                var bgImage = new Image();
-                bgImage.src = img.getAttribute("data-bg");
-
-                bgImage.onload = function() {
-                    img.style.backgroundImage = "url('" + bgImage.src + "')";
-                    img.classList.add("loaded");
-                };
-            });
+        document.addEventListener('lazybeforeunveil', function(e) {
+            var img = e.target;
+            var unveilHook = img.getAttribute('data-unveil-hook');
+            if (unveilHook === 'custom-action') {
+                // Tambahkan aksi khusus di sini
+                console.log('Gambar telah terungkap sepenuhnya!');
+            }
         });
     </script>
 @endpush
@@ -52,7 +61,7 @@
                 @forelse ($products as $product)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                         <div class="product__item {{ !$product->sizes->sum('stock') ? 'sale' : '' }}">
-                            <div class="product__item__pic set-bg lazy-bg" data-bg="{{ '/storage/' . $product->images[0]['url'] }}">
+                            <div class="product__item__pic set-bg lazyload" data-setbg="{{ '/storage/' . $product->images[0]['url'] }}" data-unveil-hook="custom-action">
                                 @if (!$product->sizes->sum('stock'))
                                     <span class="label">Sold out</span>
                                 @else
