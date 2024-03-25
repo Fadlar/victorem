@@ -135,7 +135,7 @@ ol {
     line-height: 46px;
 }
 
-.set-bg {
+.product__item__pic {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top center;
