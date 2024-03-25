@@ -345,7 +345,6 @@ ol {
 
 .header__top__links {
     display: inline-block;
-    margin-right: 25px;
 }
 
 .header__top__links a {
@@ -353,7 +352,7 @@ ol {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-right: 28px;
+    margin-right: 5px;
     display: inline-block;
 }
 
