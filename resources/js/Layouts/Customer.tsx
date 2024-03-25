@@ -21,7 +21,6 @@ export default function Customer({
             "/assets/js/jquery.slicknav.js",
             "/assets/js/mixitup.min.js",
             "/assets/js/owl.carousel.min.js",
-            "/assets/js/main.js",
         ];
 
         // Create and append script elements to the body
