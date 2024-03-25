@@ -7,8 +7,8 @@
         }
 
         /* .lazy-bg.loaded {
-                    background-image: none;
-                } */
+                        background-image: none;
+                    } */
     </style>
 @endsection
 @push('scripts')
@@ -52,7 +52,7 @@
                 @forelse ($products as $product)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                         <div class="product__item {{ !$product->sizes->sum('stock') ? 'sale' : '' }}">
-                            <div class="product__item__pic set-bg lazy-bg" data-setbg="{{ '/storage/' . $product->images[0]['url'] }}">
+                            <div class="product__item__pic lazy-bg" data-bg="{{ '/storage/' . $product->images[0]['url'] }}">
                                 @if (!$product->sizes->sum('stock'))
                                     <span class="label">Sold out</span>
                                 @else
